@@ -1,0 +1,19 @@
+<section id="profile" class="container">
+    <div class="card mb-3">
+        <h3 class="card-header">Perfil </h3>
+        <div class="card-body">
+            <h5 *ngIf="usuario.roles.administrador == true" class="card-title">{{ usuario.username }} {{ usuario.lastname }} </h5>
+            <h5 *ngIf="usuario.roles.restaurante == true" class="card-title">{{ usuario.username }}</h5>
+            <h6 class="card-subtitle text-muted">{{ usuario.email }} </h6>
+        </div>
+        <img *ngIf="usuario.roles.administrador == true" style="text-align: center; height: auto; width: 30%; display: block" [src]="usuario.photourl" alt="Card image">
+        <img *ngIf="usuario.roles.restaurante == true" style="text-align: center; height: auto; width: 30%; display: block" [src]="usuario.photourl" alt="Card image">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item text-muted">{{ usuario.uid }} </li>
+            <li class="list-group-item">{{ usuario.address }} </li>
+            <li class="list-group-item">{{ usuario.phone }} </li>
+            <li class="list-group-item" *ngIf="usuario.roles.restaurante == true"> <span class="badge-pill badge-success">{{ usuario.pago }}</span> </li>
+            <li class="list-group-item" *ngIf="usuario.roles.administrador == true"> <span *ngIf="usuario.activo == true" class="badge-pill badge-success"> Activo </span> </li>
+        </ul>
+    </div>
+</section>

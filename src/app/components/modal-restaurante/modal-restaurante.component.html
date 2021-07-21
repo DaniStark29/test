@@ -1,0 +1,93 @@
+<div class="modal fade" id="modalAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Nuevo Convenio
+                    <!-- {{!this.dataApi.selectedSucursal.id ? 'Nueva Sucursal' : 'Actualizar Sucursal'}} -->
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+            </div>
+            <div class="modal-body">
+                <form name="formAdmin" #formAdmin="ngForm" (click)="cargarImagenes(formAdmin)">
+                    <!-- <input type="hidden" name="id" [(ngModel)]="this.dataApi.selectedSucursal.id"> -->
+                    <!-- <div class="alert alert-danger" role="alert" *ngIf="isError">
+                        {{msgError}}
+                    </div> -->
+                    <div class="form-group">
+                        <label for="link_amazon">Nombre</label>
+                        <input type="text" name="username" class="form-control" placeholder="La Fondita" [(ngModel)]="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="contacto">Contacto</label>
+                        <input type="text" name="contacto" class="form-control" placeholder="Maria Gonzalez" [(ngModel)]="contacto">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_amazon">Dirección</label>
+                        <input type="text" name="address" class="form-control" placeholder="Paseos del Moral # 123" [(ngModel)]="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_amazon">Teléfono</label>
+                        <input type="number" name="phone" class="form-control" placeholder="4775642879" [(ngModel)]="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com.mx" [(ngModel)]="email" required minlength="8">
+                    </div>
+                    <!-- <div class="alert alert-danger" role="alert" *ngIf="email.touched && !email.valid">
+                        <div *ngIf="email.errors.required">Correo requerido</div>
+                        <div *ngIf="email.errors.minlength">EL correo debe tener más de 8 caracteres.</div>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" name="password" class="form-control" placeholder="" [(ngModel)]="password" required minlength="5" maxlength="10">
+                    </div>
+                    <!-- <div class="alert alert-danger" role="alert" *ngIf="password.touched && !password.valid">
+                        <div *ngIf="password.errors.required">Contraseña requerida</div>
+                        <div *ngIf="password.errors.minlength">La contraseña debe tener al menos 5 caracteres.</div>
+                    </div> -->
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p> Seleccione el logo del Convenio </p>
+                            <div appNgDropFiles [archivos]="archivos" (mouseSobre)="pruebaSobreElemento = $event" [ngClass]="{'file-over': estaSobreElemento}" class="well drop-zone">
+                                <p>Deje caer el archivo aquí</p>
+                                <img src="assets/drop-images.png" alt="">
+                            </div>
+                            <table class="table">
+                                <thead class="table table-warning">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Tamaño</th>
+                                        <th>Progreso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let archivo of archivos">
+                                        <td> {{ archivo.nombreArchivo }} </td>
+                                        <td> {{ archivo.archivo.size / 1024 / 1024 | number: '.2-2' }} MB</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': archivo.progreso + '%'}"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <button class="btn btn-primary" type="submit" [disabled]="archivos.length === 0">Guardar</button> &nbsp;
+                        <button (click)="limpiarArchivos()" class="btn btn-danger">Limpiar</button>
+                    </div>
+                    <div class="oril">
+                        <button type="hidden" class="btn btn-secondary" #btnClose data-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

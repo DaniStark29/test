@@ -1,0 +1,40 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+section {
+    margin-right: 100px;
+    margin-left: 110px;
+}
+
+.csv {
+    text-align: right;
+    height: auto;
+    width: auto;
+    margin-bottom: 1em;
+}
+
+p {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 10px;
+    margin-bottom: -1px;
+    color: #E36485;
+}
+
+.eta {
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+button {
+    border-radius: 25px;
+}
+
+input {
+    border-radius: 25px;
+}

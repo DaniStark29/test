@@ -1,0 +1,84 @@
+button {
+    border-radius: 25px;
+}
+
+input {
+    border-radius: 25px;
+}
+
+
+/*
+   server-side-angular-way.component.css
+*/
+
+.no-data-available {
+    text-align: center;
+}
+
+
+/*
+     src/styles.css (i.e. your global style)
+  */
+
+.dataTables_empty {
+    display: none;
+}
+
+
+/* .cen {
+    margin-left: 15em;
+    width: 900px;
+} */
+
+.modal-content {
+    width: 270%;
+    margin-left: -85%;
+    zoom: 80%;
+}
+
+.iconTi {
+    height: 35px;
+    width: 35px;
+}
+
+.iconTi1 {
+    text-align: right;
+    height: 100px;
+    width: 100px;
+}
+
+.sp {
+    color: #E36485;
+    font: bold;
+}
+
+.m1 {
+    margin-left: 10em;
+}
+
+.m2 {
+    margin-top: 2.5em;
+}
+
+.dp {
+    font-size: 1em;
+}
+
+.esq {
+    text-align: right;
+    margin-top: 2em;
+}
+
+span {
+    font-display: 2em;
+}
+
+
+/* .mra {
+    margin-left: 5em;
+} */
+
+table {
+    margin-right: auto;
+    margin-left: auto;
+}

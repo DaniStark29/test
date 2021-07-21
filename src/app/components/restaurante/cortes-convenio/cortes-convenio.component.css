@@ -1,0 +1,33 @@
+table {
+    width: 100%;
+}
+
+th.mat-header-cell {
+    text-align: center;
+}
+
+.total {
+    text-align: end !important;
+}
+
+mat-grid-tile {
+    background: rgba(255, 255, 255, 0);
+}
+
+.consultar {
+    background-color: #E36485;
+    color: #ffffff;
+}
+
+button:focus {
+    outline: 1px dotted !important;
+    outline: 5px auto #0c0b0b40 !important;
+}
+
+.example-container {
+    overflow-y: scroll;
+}
+
+.text-color {
+    color: #E36485;
+}

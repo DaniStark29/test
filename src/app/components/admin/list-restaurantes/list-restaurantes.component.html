@@ -1,0 +1,201 @@
+<section class="row mt-5">
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Lista de Convenios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#profile">Agregar nuevo Convenio</a>
+            </li>
+        </ul>
+        <ngx-alerts></ngx-alerts>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active show" id="home">
+                <h1><span style="font-size: 1em; color: #E36485;"><i class="fa fa-cutlery"></i></span> Listado de Convenios
+                </h1>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <!--Buscador-->
+                            <!-- <input type="text" class="form-control" placeholder="&#xf002; Buscar nombre..." style="font-family:Arial, FontAwesome" name="filterPost" [(ngModel)]="filterPost"> -->
+                        </div>
+                    </div>
+                    <!-- <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalAdmin"> <i class="fa fa-plus"></i> Nuevo Convenio </button> -->
+                </div>
+                <div class="col">
+                    <div class="csv table table-light ">
+                        <p>Exportar CSV</p>
+                        <a csvLink [data]="restaurantes" class="eta btn btn-success"><i class="fa fa-file-excel-o"
+                aria-hidden="true"></i></a>
+                    </div>
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                    </mat-form-field>
+
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort class="mat-elevation-z8">
+
+                        <!-- UID Column -->
+                        <ng-container matColumnDef="uid">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> UID </th>
+                            <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
+                        </ng-container>
+
+                        <!-- NOMBRE Column -->
+                        <ng-container matColumnDef="username">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                            <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                        </ng-container>
+
+                        <!-- CONTACTO Column -->
+                        <ng-container matColumnDef="contacto">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Contacto </th>
+                            <td mat-cell *matCellDef="let element"> {{element.contacto}} </td>
+                        </ng-container>
+
+                        <!-- TELEFONO Column -->
+                        <ng-container matColumnDef="phone">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Teléfono </th>
+                            <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+                        </ng-container>
+
+                        <!-- PLACA Column -->
+                        <ng-container matColumnDef="email">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+                            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                        </ng-container>
+
+                        <!-- ESTATUS Column -->
+                        <ng-container matColumnDef="activo">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container *ngIf="element.activo == true">
+                                    <mat-icon matBadge="+" matBadgeColor="accent">person_outline</mat-icon>
+                                </ng-container>
+                                <ng-container *ngIf="element.activo == false">
+                                    <mat-icon matBadge="-" matBadgeColor="warn">person_outline</mat-icon>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+
+                        <!-- EDITAR Column -->
+                        <ng-container matColumnDef="edit">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Editar </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-mini-fab color="accent" routerLink="../../updateRest/{{element.uid}}">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <!-- ELIMINAR Column -->
+                        <ng-container matColumnDef="delete">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Borrar </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-mini-fab color="warn" (click)="onDeleteRes(element)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <!-- STATUS Column -->
+                        <ng-container matColumnDef="status">
+                            <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Estatus </th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container *ngIf="element.activo == true">
+                                    <button mat-mini-fab color="blue" (click)="onDesactivarConvenio(element)">
+                                        <mat-icon>toggle_off</mat-icon>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="element.activo == false">
+                                    <button mat-mini-fab color="primary" (click)="onActivarConvenio(element)">                        
+                                        <mat-icon>toggle_on</mat-icon>
+                                    </button>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    <div style="padding-top: 3em;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile">
+                <div style="padding-top: 2em;" class="body">
+                    <h1><span style="font-size: 1em; color: #E36485;"><i class="fa fa-paper-plane-o"></i></span> Agregar nuevo convenio
+                    </h1>
+                    <form name="formAdmin" #formAdmin="ngForm" (ngSubmit)="cargarImagenes(formAdmin)">
+                        <div class="form-group">
+                            <label for="nombre"><b>Nombre: </b> </label>
+                            <input type="text" name="username" class="form-control" placeholder="La Fondita" [(ngModel)]="this.username">
+                        </div>
+                        <div class="form-group">
+                            <label for="contacto"><b>Contacto:</b> </label>
+                            <input type="text" name="contacto" class="form-control" placeholder="Maria Gonzalez" [(ngModel)]="this.contacto">
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label><b>Ingrese dirección de entrega: </b> </label>
+                                <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Dirección" autocorrect="off" autocapitalize="off" spellcheck="off" required="true" #search>
+                            </div>
+                            <div style="display: none">
+                                <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                                    <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                                </agm-map>
+                                <h5>Address: {{address}}</h5>
+                                <div>Latitude: {{latitude}}</div>
+                                <div>Longitude: {{longitude}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono"><b>Teléfono:</b></label>
+                            <input type="number" name="phone" class="form-control" placeholder="4775642879" [(ngModel)]="this.phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria"><b>Selecciona una categoría:</b> </label>
+                            <select class="form-control" id="categoria" name="categoria" [(ngModel)]="this.categoria">
+                <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{ categoria.nombre }} </option>
+              </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora_abierto"><b>Hora de abrir:</b> </label>
+                            <input type="time" class="form-control" name="hora_abierto" [(ngModel)]="this.hora_abierto">
+                        </div>
+                        <div class="form-group">
+                            <label for="hora_cerrar"><b>Hora de cerrar:</b> </label>
+                            <input type="time" class="form-control" name="hora_cerrar" [(ngModel)]="this.hora_cerrar">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email"><b>Correo electrónico:</b></label>
+                            <input type="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com.mx" [(ngModel)]="this.email" required minlength="8">
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><b>Contraseña</b></label>
+                            <input type="password" name="password" class="form-control" placeholder="" [(ngModel)]="this.password" required minlength="5" maxlength="10">
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <h5><b>Seleccionar imagen:</b></h5>
+                            <input class="form-control" type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                        </div>
+                        <div class="progress">
+                            <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                                <!-- <span class="progressText" *ngIf="urlImage | async">
+              Ok!!</span> -->
+                            </div>
+                        </div>
+                        <div style=" padding-top: 2em; padding-bottom: 2em;">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar</button> &nbsp;
+                            <!-- <button (click)="limpiarArchivos()" class="btn btn-danger">Limpiar</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

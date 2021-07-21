@@ -1,0 +1,39 @@
+table {
+    width: 100%;
+}
+
+.iconTi {
+    height: 35px;
+    width: 35px;
+}
+
+table {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.bz {
+    border-radius: 25px;
+}
+
+input {
+    border-radius: 25px;
+}
+
+
+/* button {
+    border-radius: 25px;
+} */
+
+p {
+    color: #E36485;
+}
+
+.modal-content {
+    width: 263%;
+    margin-left: -79%;
+}
+
+.bt {
+    margin-top: 2.5em;
+}

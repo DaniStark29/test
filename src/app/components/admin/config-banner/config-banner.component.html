@@ -1,0 +1,169 @@
+<div class="mt-5 ml-5 mr-5">
+    <ngx-alerts></ngx-alerts>
+    <div class="container">
+        <h1><span style="font-size: 1em; color: #E36485"><i class="fa fa-picture-o"></i></span> Configuración de banners </h1>
+        <div class="row">
+            <!-- <div class="col">
+                <div class="form-group">
+                    <input type="text" name="filterPost" class="form-control" placeholder="&#xf002; Buscar..." style="font-family:Arial, FontAwesome" [(ngModel)]="filterPost">
+                </div>
+            </div> -->
+            <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalBanner"><i class="fa fa-plus"></i> Nuevo banner</button>
+        </div>
+    </div>
+    <div class="col">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort class="mat-elevation-z8">
+
+            <!-- DESCRIPCION Column -->
+            <ng-container matColumnDef="descripcion">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+                <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+            </ng-container>
+
+            <!-- FECHA Column -->
+            <ng-container matColumnDef="fecha">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+            </ng-container>
+
+            <!-- MODULO Column -->
+            <ng-container matColumnDef="modulo">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Módulo </th>
+                <td mat-cell *matCellDef="let element"> {{element.modulo}} </td>
+            </ng-container>
+
+            <!-- URL Column -->
+            <ng-container matColumnDef="url">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Link URL </th>
+                <td mat-cell *matCellDef="let element"> {{element.url}} </td>
+            </ng-container>
+
+            <!-- ESTATADO Column -->
+            <ng-container matColumnDef="ba">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.estado == 'true'">
+                        <mat-icon matBadge="+" matBadgeColor="accent">aspect_ratio</mat-icon>
+                    </ng-container>
+                    <ng-container *ngIf="element.estado == 'false'">
+                        <mat-icon matBadge="-" matBadgeColor="warn">aspect_ratio</mat-icon>
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <!-- Imagen Column -->
+            <ng-container matColumnDef="photourl">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Imagen </th>
+                <td mat-cell *matCellDef="let element"> <img style="height: 45px; width: auto;" class="img" src="{{element.photourl}}"> </td>
+            </ng-container>
+
+            <!-- ELIMINAR Column -->
+            <ng-container matColumnDef="delete">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Borrar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-mini-fab color="warn" (click)="onDeleteBanner(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- BAJALTA Column -->
+            <ng-container matColumnDef="estado">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Cambiar estado </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.estado == 'true'">
+                        <button mat-mini-fab color="blue" (click)="changeEstado(element, 'false')">
+                            <mat-icon>toggle_off</mat-icon>
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="element.estado == 'false'">
+                        <button mat-mini-fab color="primary" (click)="changeEstado(element, 'true')">                        
+                            <mat-icon>toggle_on</mat-icon>
+                        </button>
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <div style="padding-top: 3em;">
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalBanner">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Banner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">Importante!</h4>
+                <p class="mb-0">Las medidas estandar para las imágenes son 692 x 390 px.</p>
+            </div>
+            <div class="modal-body">
+                <form name="formBanner" #formBanner="ngForm" (ngSubmit)="onSaveMenu(formBanner)">
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" name="fecha" class="form-control" [(ngModel)]="this.selectedBanner.fecha">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modulo">Seleccione el módulo donde se mostrara el banner</label>
+                        <select class="form-control" id="estado" name="modulo" [(ngModel)]="this.selectedBanner.modulo">
+                          <option value="indexAppCliente">Index app Cliente</option>
+                          <option value="indexWebConvenio">Index web Convenio</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion" class="col-form-label">Descripción:</label>
+                        <textarea class="form-control" name="descripcion" [(ngModel)]="this.selectedBanner.descripcion"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="url" class="col-form-label">Link URL:</label>
+                        <input type="text" name="url" class="form-control" [(ngModel)]="this.selectedBanner.url">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select class="form-control" id="estado" name="estado" [(ngModel)]="this.selectedBanner.estado">
+                          <option value="true">Activar</option>
+                          <option value="false">Desactivar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <h5>Seleccionar imagen:</h5>
+                        <input class="hi" type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                    </div>
+                    <div class="progress">
+                        <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                            <!-- <span class="progressText" *ngIf="urlImage | async">
+          Ok!!</span> -->
+                        </div>
+                    </div>
+                    <br>
+                    <input #imageUser type="hidden" [value]="urlImage | async">
+                    <br>
+                    <div>
+                        <!-- <button class="btn btn-primary" type="submit" [disabled]="archivos.length === 0">Guardar</button> &nbsp; -->
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button> &nbsp;
+                        <!-- <button type="hidden" class="btn btn-secondary" #btnClose data-dismiss="modal">Cerrar</button> -->
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

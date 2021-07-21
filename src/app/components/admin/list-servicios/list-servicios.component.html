@@ -1,0 +1,138 @@
+<section class="row mt-5">
+    <div class="container">
+        <!-- <h3 class="display-6"> <i class="fa fa-globe"></i> Servicios de: {{ jsToday }} </h3> -->
+        <!-- <mat-label>Servicios</mat-label> -->
+        <h2><span style="font-size: 1em; color: #E36485;"><i class="fa fa-globe"></i></span> Servicios del día</h2>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <!--Buscador-->
+                    <!-- <input type="text" class="form-control" placeholder="&#xf002; Buscar servicio por clave..." style="font-family:Arial, FontAwesome" name="filterPost" [(ngModel)]="filterPost"> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row pad-10">
+            <div class="col-2">
+                <div class="card text-white bg-primary mb-3" style="max-width: 30rem;">
+                    <div class="card-header">Servicios del Día</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Primary card title</h4>
+                        <p class="card-text">Some quick</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="card text-white bg-warning mb-3" style="max-width: 30rem;">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Primary card title</h4>
+                        <p class="card-text">Some quick</p>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <hr class="my-4">
+        <!-- <div class="row pad-10"> -->
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort class="mat-elevation-z8">
+
+            <!-- CLAVE Column -->
+            <ng-container matColumnDef="clave">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Clave </th>
+                <td mat-cell *matCellDef="let element"> <b>{{element.clave}}</b> </td>
+            </ng-container>
+
+            <!-- HORA Column -->
+            <ng-container matColumnDef="hora">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Hora </th>
+                <td mat-cell *matCellDef="let element"> {{element.fecha | date:'shortTime'}}</td>
+            </ng-container>
+
+            <!-- USUARIO Column -->
+            <ng-container matColumnDef="usuario">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreUsuario}} </td>
+            </ng-container>
+
+            <!-- TIPO Column -->
+            <ng-container matColumnDef="tipo">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.tipo && element.abierto == null">
+                        <img class="iconTi" src="../../../../assets/imgs/tipo1.png" title="Servicio pide lo que quieras.">
+                    </ng-container>
+                    <ng-container *ngIf="element.abierto == 'Abierto plataforma'">
+                        <img class="iconTi" src="../../../../assets/imgs/tipo2.png" title="Servicio de convenio.">
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <!-- ESTADO Column -->
+            <ng-container matColumnDef="estatus">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.estatus == 'Notificando'">
+                        <span class="badge badge-primary">Buscando Repartidor</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'Aceptado'">
+                        <span class="badge badge-success">Aceptado</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'Yendo'">
+                        <span class="badge badge-primary">Dirigiendose al establecimiento</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'Comprando'">
+                        <span class="badge badge-primary">Comprando</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'Comprado'">
+                        <span class="badge badge-primary">LLevando el pedido al cliente</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'EnPuerta'">
+                        <span class="badge badge-primary">Esta en puerta</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'Pago'">
+                        <span class="badge badge-success">Pagando servicio</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'Pagado'">
+                        <span class="badge badge-success">Servicio Finalizando</span>
+                    </ng-container>
+                    <!-- Restaurante estados -->
+                    <ng-container *ngIf="element.estatus == 'Gestando'">
+                        <span class="badge badge-primary">Se esta preparando el
+                        pedido</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'AceptaBme'">
+                        <span class="badge badge-primary">Servicio aceptado por
+                        BMe</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'BuscandoBme'">
+                        <span class="badge badge-primary">Notificando al repartidor</span>
+                    </ng-container>
+                    <ng-container *ngIf="element.estatus == 'Enviando'">
+                        <span class="badge badge-primary">Dirigiendose al domicilio</span>
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <!-- DETALLE Column -->
+            <ng-container matColumnDef="detalle">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Detalle </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-mini-fab color="accent" title="Detalle del pedido." routerLink="../../servicio/{{element.uid}}">
+                        <mat-icon>list</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <div style="padding-top: 3em;">
+
+        </div>
+    </div>
+    <!-- </div> -->
+</section>

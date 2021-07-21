@@ -1,0 +1,472 @@
+<section class="m-3">
+    <mat-card>
+        <!-- TITULO -->
+        <mat-card-title class="text-muted">Pedido {{ servicio.clave }}</mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+
+                        <!-- Estado del servicio -->
+                        <th scope="col">
+                            <div style="position:relative;margin: -393px 0 -250px 10px;">
+                                <mat-card>
+                                    <mat-card-subtitle style="text-align: left">ESTADO</mat-card-subtitle>
+                                    <div class="esq mr-1 mb-1">
+                                        <!-- cambio de estatus -->
+                                        <ul class="nav nav-pills">
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cambiar estatus del servicio</a>
+                                                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Notificando')">Notificando</a>
+                                                    <!-- <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Aceptado')">Aceptado</a> -->
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'BuscandoBme')">Buscar Bme</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Yendo')">Dirigiendose al establecimiento</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Comprando')">Comprando</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Comprado')">Comprado / llevando pedido al cliente</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Gestando')">Preparando</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Enviando')">Enviando</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'EnPuerta')">En Puerta</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Finalizado')">Finalizando servicio</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Pagado')">Pagado</a>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Terminado')">Terminado</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" (click)="changeStatus(servicio.uid, 'Cancelado')">Cancelado</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <!-- termina cambio de estatus -->
+                                    </div>
+                                    <!-- ACEPTADO -->
+                                    <div *ngIf="servicio.estatus == 'Notificando'" class="progress-bar badge-pill badge-success" role="progressbar" style="width: 12.5%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Notificando(12%) </div>
+
+                                    <div *ngIf="servicio.estatus == 'Aceptado'" class="progress-bar badge-pill bg-success" role="progressbar" style="width: 25%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Aceptado(25%)</div>
+
+                                    <div *ngIf="servicio.estatus == 'BuscandoBme'" class="progress-bar badge-pill bg-success" role="progressbar" style="width: 25%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Buscando Repartidor(25%)</div>
+
+                                    <div *ngIf="servicio.estatus == 'Yendo'" class="progress-bar badge-pill bg-info" role="progressbar" style="width: 37.5%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Dirigiendose al establecimiento(37%) </div>
+
+                                    <div *ngIf="servicio.estatus == 'Comprando'" class="progress-bar badge-pill bg-primary" role="progressbar" style="width: 50%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Comprando(50%) </div>
+
+                                    <!-- <div *ngIf="servicio.estatus == 'LLevandolo'" class="progress-bar bg-success" role="progressbar" style="width: 62.5%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Comprado(62%) </div> -->
+
+                                    <div *ngIf="servicio.estatus == 'Gestando'" class="progress-bar badge-pill bg-info" role="progressbar" style="width: 62.5%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Preparando(62%) </div>
+
+                                    <div *ngIf="servicio.estatus == 'Comprado'" class="progress-bar badge-pill bg-primary" role="progressbar" style="width: 75%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Llevando el pedido al cliente(75%) </div>
+
+                                    <div *ngIf="servicio.estatus == 'Enviando'" class="progress-bar bg-success" role="progressbar" style="width: 87.5%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Dirigiendose al domicilio(87%) </div>
+
+                                    <div *ngIf="servicio.estatus == 'EnPuerta'" class="progress-bar bg-success" role="progressbar" style="width: 87.5%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Esta en puerta(87%) </div>
+                                    <div *ngIf="servicio.estatus == 'Pago'" class="progress-bar bg-success" role="progressbar" style="width: 90.5%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Pagando servicio(90%) </div>
+
+
+                                    <div *ngIf="servicio.estatus == 'Pagado'" class="progress-bar badge-pill bg-success" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Servicio Terminado(100%)
+                                    </div>
+
+                                    <div *ngIf="servicio.estatus == 'Terminado'" class="progress-bar badge-pill bg-success" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Servicio Terminado(100%) </div>
+
+                                    <div *ngIf="servicio.estatus == 'Cancelado'" class="progress-bar badge-pill bg-danger" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Cancelado</div>
+                                    <!-- Fin de barra de estado -->
+                                </mat-card>
+                            </div>
+                        </th>
+                        <!-- RESUMEN -->
+                        <th scope="col">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">RESUMEN</mat-card-subtitle>
+
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Total</td>
+                                            <th style="text-align:left" colspan="2">{{ totalNet_totalEst | currency }} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Pago</td>
+                                            <th style="text-align:left" colspan="2">{{servicio.metodo_pago}} </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Nota de pago</td>
+                                            <th style="text-align:left" colspan="2">
+                                                <ng-container *ngIf="servicio.abierto == null">
+                                                    Servicio abierto desde aplicación.
+                                                </ng-container>
+                                                <ng-container *ngIf="servicio.abierto != null">
+                                                    Servicio abierto por convenio desde plataforma.
+                                                </ng-container>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Fecha</td>
+                                            <th style="text-align:left" colspan="2">{{ servicio.fecha | date: 'dd-MM-yyyy HH:mm:ss' }} </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Tiempo</td>
+                                            <th style="text-align:left">{{ servicio.tiempoServicio }} mins.</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Distancia</td>
+                                            <th style="text-align:left" colspan="2">{{ servicio.km }} Kms. </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Tipo de pedido</td>
+                                            <th style="text-align:left" colspan="2">
+                                                <ng-container>
+                                                    {{ servicio.tipo == 1 ? 'Pide lo que quieras': 'Convenio' }}
+                                                </ng-container>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Cliente</td>
+                                            <th style="text-align:left" colspan="2">
+                                                <ng-container *ngFor="let cliente of clientes">
+                                                    {{ cliente.username }} {{ cliente.lastname }}
+                                                </ng-container>
+                                            </th>
+                                        </tr>
+                                        <tr *ngIf="servicio.uidRestaurante">
+                                            <td style="text-align:left" colspan="2">Convenio</td>
+                                            <th style="text-align:left" colspan="2">
+                                                <ng-container *ngFor="let convenio of convenios">
+                                                    {{ convenio.username }}
+                                                </ng-container>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="2">Repartidor</td>
+                                            <th style="text-align:left" colspan="2">
+                                                <ng-container *ngFor="let repartidor of repartidores">
+                                                    {{ repartidor.username }} {{ repartidor.lastname }}
+                                                </ng-container>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-card>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!-- TICKETS -->
+                        <th scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">TICKETS</mat-card-subtitle>
+                                <mat-card>
+                                    <ng-container *ngFor="let ped of pedido">
+                                        <a data-toggle="modal" data-target="#modalTicket2" href=""> <img class="ticket" [src]="ped.ticket" alt=""> </a>
+
+                                        <mat-card-title>{{ ped.total | currency }} </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <div *ngIf="ped.pedidoGeo != null">
+                                                <a style="font-size: 10px;" href="{{ 'https://maps.google.com/?q='+ ped.pedidoGeo._lat +','+ ped.pedidoGeo._long }}" target="_blank"> <span class=""><b>{{ ped.direccionLocal }} </b></span></a>
+                                            </div>
+                                            <div *ngIf="ped.pedidoGeo == null">
+                                                <a style="font-size: 10px;"> <span class=""><b>{{ ped.direccionLocal }}</b></span></a>
+                                            </div>
+                                        </mat-card-subtitle>
+                                        <mat-card-footer>{{ ped.nombreLocal }} </mat-card-footer>
+                                    </ng-container>
+                                </mat-card>
+                            </mat-card>
+                        </th>
+                        <!-- MAPA -->
+                        <th scope="row">
+                            <mat-card>
+                                <ng-container *ngIf="servicio.estatus != 'Terminado' && servicio.estatus != 'Pagado'">
+                                    <!-- <ng-container *ngIf="servicio.estatus != 'Terminado'"> -->
+                                    <div style="text-align: center;">
+                                        <h4>Aún no se ha generado una ruta.</h4>
+                                        <img class="log1" src="../../../../assets/imgs/Espera.gif" alt="BringMe Docs.">
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="servicio.estatus == 'Terminado' || servicio.estatus == 'Pagado'">
+                                    <div #map id="map"></div>
+                                </ng-container>
+                            </mat-card>
+                        </th>
+                    </tr>
+                    <!-- DETALLE DEL PEDIDO -->
+                    <tr>
+                        <th colspan="2" scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">DETALLE DEL PEDIDO</mat-card-subtitle>
+                                <table class="table table-hover ">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Nota</th>
+                                            <!-- <th scope="col">Comprar en</th>
+                                            <th scope="col">Local</th> -->
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let producto of productos">
+                                            <!-- <ng-container *ngFor="let ped of pedido"> -->
+                                            <th scope="row">
+                                                {{ producto.cantidad }}
+                                            </th>
+                                            <th>
+                                                {{producto.producto }}
+                                                <ng-container *ngIf="servicio.uidRestaurante">
+                                                    {{ producto.descripcion }}
+                                                </ng-container>
+
+                                            </th>
+                                            <th>
+                                                {{ producto.nota }}
+                                                <ng-container *ngIf="!servicio.uidRestaurante">
+                                                    {{ producto.descripcion }}
+                                                </ng-container>
+                                            </th>
+                                            <!-- <td>{{ ped.direccionLocal }} </td>
+                                                <td>{{ ped.nombreLocal }} </td> -->
+                                            <!-- </ng-container> -->
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </mat-card>
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <!-- COSTO DE SERVICIO -->
+                        <th scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">COSTO DE SERVICIO</mat-card-subtitle>
+                                <table class="table table-hover ">
+                                    <tr>
+                                        <td scope="col">Corte Repartidor</td>
+                                        <td scope="col">{{servicio.corteRep | currency }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Corte BMe</th>
+                                        <td>{{servicio.corteBme | currency }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Total establecimientos adicionales</th>
+                                        <td>{{totalEstablecimientos | currency}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-info" scope="row">Total servicio</th>
+                                        <td class="table-info">{{servicio.totalServicio | currency }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-success" colspan="2">
+                                            <mat-card-subtitle>
+                                                Total pagado
+                                            </mat-card-subtitle>
+                                            <mat-card-title>
+                                                {{totalSer_totalEst | currency }}
+                                            </mat-card-title>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </mat-card>
+
+                        </th>
+                        <!-- TOTALES -->
+                        <th scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">TOTALES</mat-card-subtitle>
+                                <table class="table table-hover ">
+                                    <tr>
+                                        <td scope="col">Productos</td>
+                                        <td scope="col">{{servicio.totalProductos | currency }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Servicio</th>
+                                        <td>{{servicio.totalServicio | currency }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Total establecimientos adicionales</th>
+                                        <td>{{servicio.numPedidos * 15 | currency}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-info" scope="row">Total</th>
+                                        <td class="table-info">{{ totalNet_totalEst | currency }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-success" colspan="2">
+                                            <mat-card-subtitle>
+                                                Total pagado
+                                            </mat-card-subtitle>
+                                            <mat-card-title>
+                                                {{ totalNet_totalEst | currency }}
+                                            </mat-card-title>
+                                            {{ servicio.metodo_pago }}
+                                        </th>
+                                    </tr>
+                                </table>
+                            </mat-card>
+
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <!-- CLIENTES -->
+                        <th scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">CLIENTE</mat-card-subtitle>
+                                <table class="table table-hover ">
+                                    <ng-container *ngFor="let cliente of clientes">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">{{ cliente.username }} {{cliente.lastname}} </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Correo</th>
+                                            <td>
+                                                {{cliente.email}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Celular</th>
+                                            <td>
+                                                {{cliente.phone}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Dirección de pedido</th>
+                                            <td>
+                                                {{ servicio.entregaDir }}
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </table>
+                            </mat-card>
+
+                        </th>
+                        <!-- EVALUACION -->
+                        <th scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">EVALUACIÓN</mat-card-subtitle>
+
+                            </mat-card>
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <!-- REPARTIDOR -->
+                        <th scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">REPARTIDOR</mat-card-subtitle>
+                                <table class="table table-hover">
+                                    <ng-container *ngFor="let repartidor of repartidores">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">{{ repartidor.username }} {{repartidor.lastname}} </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Correo</th>
+                                            <td>
+                                                {{repartidor.email}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Celular</th>
+                                            <td>
+                                                {{repartidor.phone}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Unidad</th>
+                                            <td>
+                                                {{ repartidor.marca }} - {{repartidor.placa}}
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </table>
+                            </mat-card>
+
+                        </th>
+                        <!-- EVALUACION -->
+                        <th scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">EVALUACIÓN</mat-card-subtitle>
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th scope="col">Cal. Cliente</th>
+                                        <th scope="col">
+                                            <img *ngIf="servicio.calificacionRepartidor == 1" src="../../../../assets/imgs/1.png" alt="Calificación del servicio">
+                                            <img *ngIf="servicio.calificacionRepartidor == 2" src="../../../../assets/imgs/2.png" alt="Calificación del servicio">
+                                            <img *ngIf="servicio.calificacionRepartidor == 3" src="../../../../assets/imgs/3.png" alt="Calificación del servicio">
+                                            <img *ngIf="servicio.calificacionRepartidor == 4" src="../../../../assets/imgs/4.png" alt="Calificación del servicio">
+                                            <img *ngIf="servicio.calificacionRepartidor == 5" src="../../../../assets/imgs/5.png" alt="Calificación del servicio">
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" scope="row">Comentarios del cliente</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" scope="row">
+                                            {{ servicio.comentarioRepartidor }}
+                                        </th>
+                                    </tr>
+                                </table>
+                            </mat-card>
+
+                        </th>
+                    </tr>
+                    <!-- NOTAS Y ESTADO -->
+                    <tr>
+                        <th colspan="2" scope="row">
+                            <mat-card>
+                                <mat-card-subtitle style="text-align: left">NOTAS Y ESTADO</mat-card-subtitle>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nota de plataforma</th>
+                                            <th scope="col">
+                                                {{servicio.abierto == null ? 'Servicio abierto desde aplicación.': 'Servicio abierto por convenio desde plataforma.' }}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Uid Servicio</th>
+                                            <td>{{ servicio.uid }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Estatus</th>
+                                            <td>{{ servicio.estatus }} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-card>
+
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</section>
+<!-- Modal de TICKET  -->
+<div class="modal" id="modalTicket2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ticket del servicio con clave: <b>{{ servicio.clave }}</b> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+            </div>
+            <div class="modal-body mt-5">
+                <ng-container *ngFor="let ped of pedido">
+                    <img style="transform: rotate(90deg); height: auto; width: 100%;" class="" [src]="ped.ticket" alt="">
+                </ng-container>
+            </div>
+            <div class="modal-footer mt-5">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>s

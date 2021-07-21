@@ -1,0 +1,67 @@
+<ngx-alerts></ngx-alerts>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="text-center" style="padding-top: 2em;">
+                <h3><span style="font-size: 1em; color: #E36485;"><i class="fa fa-motorcycle"></i> Editando repartidor: </span> {{repartidor.username}}</h3>
+            </div>
+            <form name="formRepartidor" #formRepartidor="ngForm" (ngSubmit)="onSaveRepartidor(formRepartidor)">
+                <!-- <input type="hidden" name="id" [(ngModel)]="this.dataApi.selectedSucursal.id"> -->
+                <div class="form-group">
+                    <label for="nombre"> <b>Nombre:</b></label>
+                    <input type="text" name="username" class="form-control" placeholder="Juan Eduardo" [(ngModel)]="repartidor.username">
+                </div>
+                <div class="form-group">
+                    <label for="apellido"> <b>Apellido:</b></label>
+                    <input type="text" name="lastname" class="form-control" placeholder="Martinez Gutierrez" [(ngModel)]="repartidor.lastname">
+                </div>
+                <div class="form-group">
+                    <label for="direccion"> <b>Dirección:</b></label>
+                    <input type="text" name="address" class="form-control" placeholder="Paseos del Moral # 123" [(ngModel)]="repartidor.address">
+                </div>
+                <div class="form-group">
+                    <label for="telefono"> <b>Teléfono:</b></label>
+                    <input type="number" name="phone" class="form-control" placeholder="4775642879" [(ngModel)]="repartidor.phone">
+                </div>
+                <div class="form-group">
+                    <label for="transporte"> <b>Marca de tranporte:</b></label>
+                    <input type="text" name="marca" class="form-control" placeholder="Italika" [(ngModel)]="repartidor.marca">
+                </div>
+                <div class="form-group">
+                    <label for="placa"><b>Placa:</b></label>
+                    <input type="text" name="placa" class="form-control" placeholder="ASD-987-98" [(ngModel)]="repartidor.placa">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="link_amazon">Correo electrónico</label>
+                    <input type="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com.mx" [(ngModel)]="email" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="link_amazon">Contraseña</label>
+                    <input type="password" name="password" class="form-control" placeholder="" [(ngModel)]="password" required minlength="5" maxlength="10">
+                </div> -->
+                <hr>
+                <label for="imagen"><b> <em> Imagen actual del repartidor </em></b> </label><br>
+                <div class="text-center">
+                    <img [src]="repartidor.photourl" class="rounded" />
+                </div>
+                <div class="form-group">
+                    <h5> <b>Seleccionar imagen:</b> </h5>
+                    <input class="hi" type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                </div>
+                <div class="progress">
+                    <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                        <!-- <span class="progressText" *ngIf="urlImage | async">
+          Ok!!</span> -->
+                    </div>
+                </div>
+                <br>
+                <input #imageUser type="hidden" [value]="urlImage | async">
+                <!-- <button *ngIf="urlImage | async; else btnDisabled" type="submit" class="btn btn-lg btn-primary btn-block">Registrar</button> -->
+                <div style="padding-bottom: 2em;">
+                    <button type="submit" class="btn btn-lg btn-primary btn-block">Actualizar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

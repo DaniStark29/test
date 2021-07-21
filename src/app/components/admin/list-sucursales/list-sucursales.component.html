@@ -1,0 +1,56 @@
+<section class="row mt-5">
+    <div class="container">
+        <h1><span style="font-size: 1em; color: #E36485;"><i class="fa fa-building"></i></span> Listado de sucursales</h1>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <input type="text" name="filterPost" class="form-control" placeholder="&#xf002; Buscar..." style="font-family:Arial, FontAwesome" [(ngModel)]="filterPost">
+                </div>
+            </div>
+            <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalSucursal"><i class="fa fa-plus"></i> Nueva Sucursal</button>
+
+        </div>
+    </div>
+    <div class="col">
+        <table class="table table-warning table-sm table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sucursal of sucursales | filterSucursal:filterPost | paginate: { itemsPerPage: 5, currentPage: p }; index as i" class="table-light">
+                    <th scope="row"> {{i + 1 }} </th>
+                    <td> {{ sucursal.estado }} </td>
+                    <td> {{ sucursal.descripcion }} </td>
+
+                    <!-- <td> {{sucursal.opciones == 1 ? 'Si': 'No'}} </td> -->
+                    <!-- <td *ngIf="sucursal.userId == userUid || isAdmin == true; else noOwner"> -->
+                    <td>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalSucursal" (click)="onPreUpdateSucursal(sucursal)"><i class="fa fa-pencil"></i></button>
+                    </td>
+                    <!-- <ng-template #noOwner>
+                        <td>
+                            <button class="btn btn-primary" disabled="true"><i class="fa fa-pencil"></i></button>
+                        </td>
+                    </ng-template> -->
+                    <td>
+                        <!-- <td *ngIf="isAdmin == true; else noAdmin"> -->
+                        <button class="btn btn-danger" (click)="onDeleteSucursal(sucursal.id)"><i class="fa fa-trash"></i></button>
+                    </td>
+                    <!-- <ng-template #noAdmin>
+                        <td>
+                            <button class="btn btn-danger" disabled="true">Borrar</button>
+                        </td>
+                    </ng-template> -->
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+</section>
+<app-modal [userUid]="userUid"></app-modal>

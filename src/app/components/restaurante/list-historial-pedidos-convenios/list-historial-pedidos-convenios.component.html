@@ -1,0 +1,107 @@
+<section class="row mt-5">
+    <!-- <ngx-alerts></ngx-alerts> -->
+    <div class="container">
+        <h1><span style="font-size: 1em; color: #E36485;"><i class="fa fa-history"></i></span> Pedidos</h1>
+        <strong class="mr-auto">Sucursal</strong>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <!--Buscador-->
+                    <!-- <input type="text" class="form-control" placeholder="&#xf002; Buscar nombre..." style="font-family:Arial, FontAwesome" name="filterPost" [(ngModel)]="filterPost"> -->
+                </div>
+            </div>
+            <!-- <button class="btn btn-primary float-right mb-3" data-toggle="modnaval" data-target="#modalAdmin"> <i class="fa fa-plus"></i> Nuevo administrador </button> -->
+        </div>
+    </div>
+
+    <div class="col m-5">
+        <div style="">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort class="mat-elevation-z8">
+
+                <!-- CLAVE Column -->
+                <ng-container matColumnDef="clave">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Clave </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clave}} </td>
+                </ng-container>
+
+                <!-- TIPO Column -->
+                <ng-container matColumnDef="tipo">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="element.tipo && element.abierto == null">
+                            <img class="iconTi" src="../../../../assets/imgs/tipo1.png" title="Servicio pide lo que quieras.">
+                        </ng-container>
+                        <ng-container *ngIf="element.abierto == 'Abierto plataforma'">
+                            <img class="iconTi" src="../../../../assets/imgs/tipo2.png" title="Servicio de convenio.">
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <!-- ESTATUS Column -->
+                <ng-container matColumnDef="estatus">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="element.estatus == 'Terminado' ">
+                            <button type="button" style="text-align: center;" class="btn btn-success">                     
+                                 <mat-icon>done</mat-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="element.estatus == 'Cancelado' ">
+                            <button type="button" style="text-align: center;" class="btn btn-danger">                     
+                                <mat-icon>clear</mat-icon>
+                           </button>
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <!-- FECHA Column -->
+                <ng-container matColumnDef="fecha">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fecha | date: 'dd/MM/yy h:mm:ss' }} </td>
+                </ng-container>
+
+                <!-- CLIENTE Column -->
+                <ng-container matColumnDef="nombreUsuario">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nombreUsuario}} </td>
+                </ng-container>
+
+                <!-- TOTALNETO Column -->
+                <ng-container matColumnDef="totalNeto">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="!element.totalNeto">
+                            $0.00
+                        </ng-container>
+                        <ng-container *ngIf="element.totalNeto">
+                            {{ element.totalNeto | currency }}
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <!-- DETALLE Column -->
+                <ng-container matColumnDef="detalle">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Detalle </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-mini-fab color="warn" title="Detalle del pedido." title="Detalle del pedido." routerLink="../../servicio-convenio/{{element.uid}}">
+                            <mat-icon>assignment</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+
+        <div style="padding-top: 3em;">
+
+        </div>
+
+    </div>
+</section>

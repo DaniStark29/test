@@ -1,0 +1,265 @@
+<div class="jumbotron">
+    <ngx-alerts></ngx-alerts>
+    <h1><span style="font-size: 1em; color: #E36485;"><i class="fa fa-cogs"></i></span> Configuración de los servicios</h1>
+    <p class="lead"></p>
+    <hr class="my-4">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Mpago">Metódo de pago</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#vehi">Vehículos</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configuración de servicios</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" data-toggle="tab" href="#regular">Servicios Regulares</a>
+                <a class="dropdown-item" data-toggle="tab" href="#menu">Servicios del Menú</a>
+                <!-- <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a> -->
+            </div>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade show active" id="Mpago">
+            <div class="class row pad-10">
+                <div class="col-10 mt-2">
+                    <div class="card border-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Métodos de pago</div>
+                        <div *ngFor="let pago of pagos" class="card-body">
+                            <form name="formPago" #formPago="ngForm" (ngSubmit)="updatePago(pago.uid)">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="efectivo" name="Efectivo" [checked]="pago.Efectivo" data-md-icheck (change)="updateEfectivo($event, pago.uid)">
+                                        <label class="custom-control-label" for="customCheck1"><img class="iconTi" src="../../../../assets/imgs/efectivo.png" title="Pago en efectivo">
+                                                <span *ngIf="pago.Efectivo == true" class="badge badge-pill badge-success">Habilitado</span> 
+                                                <span *ngIf="pago.Efectivo == false" class="badge badge-pill badge-danger">Deshabilitado</span>
+                                            </label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck2" [(ngModel)]="tarjeta" name="Tarjeta" [checked]="pago.Tarjeta" data-md-icheck (change)="updateTarjeta($event, pago.uid)">
+                                        <label class="custom-control-label" for="customCheck2"><img class="iconTi" src="../../../../assets/imgs/tarjeta-de-credito.png" title="Pago en efectivo">
+                                                <span *ngIf="pago.Tarjeta == true" class="badge badge-pill badge-success">Habilitado</span> 
+                                                <span *ngIf="pago.Tarjeta == false" class="badge badge-pill badge-danger">Deshabilitado</span>
+                                            </label>
+                                    </div>
+                                    <br>
+                                    <fieldset>
+                                        <!-- <button type="submit" class="btn btn-primary">Guardar</button> -->
+                                    </fieldset>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="vehi">
+            <div class="class row pad-10 mt-2">
+                <div class="col-6">
+                    <div class="card border-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Vehículos</div>
+                        <div *ngFor="let transporte of transportes" class="card-body">
+                            <form name="formTransporte" #formTransporte="ngForm" (ngSubmit)="updateTransporte(transporte.uid)">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck3" [(ngModel)]="transporte.moto" name="moto" [checked]="transporte.moto" data-md-icheck (change)="updateMoto($event, transporte.uid)">
+                                        <label class="custom-control-label" for="customCheck3"><img class="iconTi2" src="../../../../assets/imgs/moto_1.png" title="Motócicleta">  
+                                                        <span *ngIf="transporte.moto == true" class="badge badge-pill badge-success">Habilitado</span> 
+                                                        <span *ngIf="transporte.moto == false" class="badge badge-pill badge-danger">Deshabilitado</span>
+                                                    </label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck4" [(ngModel)]="transporte.car" name="car" [checked]="transporte.car" data-md-icheck (change)="updateCarro($event, transporte.uid)">
+                                        <label class="custom-control-label" for="customCheck4"><img class="iconTi2" src="../../../../assets/imgs/car_1.png" title="Carro">
+                                                        <span *ngIf="transporte.car == true" class="badge badge-pill badge-success">Habilitado</span> 
+                                                        <span *ngIf="transporte.car == false" class="badge badge-pill badge-danger">Deshabilitado</span>
+                                                    </label>
+                                    </div>
+                                    <br>
+                                    <fieldset>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </fieldset>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Configuracion de servicios regulares -->
+        <div class="tab-pane fade" id="regular">
+            <div class="col-11 mt-3 mb-3" style="text-align:center">
+                <h3>
+                    Configuración
+                    <small class="text-muted">de tarifas de servicios regulares</small>
+                </h3>
+            </div>
+            <div class="row pad-10 mt-2">
+                <div class="col-6">
+                    <div class="card border-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Costos fijos</div>
+                        <div *ngFor="let costo of costos" class="card-body">
+                            <form name="formCosto" #formCosto="ngForm" (ngSubmit)="updateArranque(formCosto, costo.uid)">
+                                <div class="form-group">
+                                    <label class="control-label">Arranque</label>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input name="arranque" type="number" class="form-control" [(ngModel)]="costo.arranque" aria-label="Cantidad en pesos">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"> Cuota inicial</span>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div *ngFor="let tarifa of tarifas" class="card border-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Precios del servicio</div>
+                        <form name="formTarifa" #formTarifa="ngForm" (ngSubmit)="updateTarifas(formTarifa, tarifa.uid)">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="control-label">Tarifa x Distancia</label>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="number" name="distancia" [(ngModel)]="tarifa.distancia" class="form-control" aria-label="Cantidad en pesos">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"> x Km.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Tarifa x Tiempo</label>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="number" name="tiempo" [(ngModel)]="tarifa.tiempo" class="form-control" aria-label="Cantidad en pesos">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"> x minuto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <fieldset>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="menu">
+            <div class="col-11 mt-3 mb-3" style="text-align:center">
+                <h3>
+                    Configuración
+                    <small class="text-muted">de tarifas de servicios del Menú de Convenios</small>
+                </h3>
+            </div>
+            <div class="row pad-10 mt-2">
+                <div class="col-6">
+                    <div class="card border-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Costos fijos</div>
+                        <div *ngFor="let costo of costos_menu" class="card-body">
+                            <form name="formCostoMenu" #formCostoMenu="ngForm" (ngSubmit)="updateArranqueMenu(formCostoMenu, costo.uid)">
+                                <div class="form-group">
+                                    <label class="control-label">Arranque</label>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input name="arranque" type="number" class="form-control" [(ngModel)]="costo.arranque" aria-label="Cantidad en pesos">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"> Cuota inicial</span>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div *ngFor="let tarifa of tarifas_menu" class="card border-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Precios del servicio</div>
+                        <form name="formTarifaMenu" #formTarifaMenu="ngForm" (ngSubmit)="updateTarifasMenu(formTarifaMenu, tarifa.uid)">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="control-label">Tarifa x Distancia</label>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="number" name="distancia" [(ngModel)]="tarifa.distancia" class="form-control" aria-label="Cantidad en pesos">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"> x Km.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Tarifa x Tiempo</label>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="number" name="tiempo" [(ngModel)]="tarifa.tiempo" class="form-control" aria-label="Cantidad en pesos">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"> x minuto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <fieldset>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card border-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Consumo mínimo de los menús</div>
+                        <div *ngFor="let costo of costos_menu_min" class="card-body">
+                            <form name="formCostoMenuMin" #formCostoMenuMin="ngForm" (ngSubmit)="updateArranqueMenuMin(formCostoMenuMin, costo.uid)">
+                                <div class="form-group">
+                                    <label class="control-label">Tarifa</label>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input name="costo" type="number" class="form-control" [(ngModel)]="costo.costo" aria-label="Cantidad en pesos">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"> Mínima</span>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

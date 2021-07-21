@@ -1,0 +1,57 @@
+<section class="row mt-5">
+    <div class="container">
+        <h1><span style="font-size: 1em; color: #E36485;"><i class="fa fa-car"></i></span> Listado de transportes</h1>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <input type="text" name="filterPost" class="form-control" placeholder="&#xf002; Buscar placa..." style="font-family:Arial, FontAwesome" [(ngModel)]="filterPost">
+                </div>
+            </div>
+            <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalTrnsporte"><i class="fa fa-plus"></i> Nuevo Vehículo</button>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="csv table table-light ">
+            <p>Exportar CSV</p>
+            <a csvLink [data]="transportes" class="eta btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+        </div>
+        <table class="table table-warning table-sm table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="transportes?.length != 0">
+                <tr *ngFor="let transporte of transportes | transporte: filterPost | paginate: { itemsPerPage: 5, currentPage: p }; index as i" class="table-light">
+                    <th scope="row"> {{i + 1 }} </th>
+                    <td> {{ transporte.tipo }} </td>
+                    <td> {{ transporte.marca }} </td>
+                    <td> {{ transporte.modelo }} </td>
+                    <td> {{ transporte.placa }} </td>
+                    <td> {{ transporte.descripcion }} </td>
+                    <td>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTrnsporte" (click)="onPreUpdateTransporte(transporte)"><i class="fa fa-pencil"></i></button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" (click)="onDeleteTransporte(transporte.id)"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <tbody *ngIf="transportes?.length == 0">
+            <tr>
+                <td colspan="8" class="no-data-available">No data!</td>
+            </tr>
+            <tbody>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+</section>
+<app-modal-transporte></app-modal-transporte>

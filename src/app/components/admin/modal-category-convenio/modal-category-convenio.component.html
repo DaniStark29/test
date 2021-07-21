@@ -1,0 +1,61 @@
+<div class="modal fade" id="modalCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Categoría
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <ngx-alerts></ngx-alerts>
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">Importante!</h4>
+                <p class="mb-0">Las medidas estandar para las imágenes son 600 x 198 px.</p>
+            </div>
+            <div class="modal-body">
+                <form name="formCategoria" #formCategoria="ngForm" (ngSubmit)="onSaveCategoria(formCategoria)">
+
+                    <input type="hidden" name="id" [(ngModel)]="this.serv_cat.selectedCategoria.id">
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" placeholder="Farmacia" [(ngModel)]="this.serv_cat.selectedCategoria.nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="posicion">Posición</label>
+                        <input type="number" name="posicion" class="form-control" placeholder="1" [(ngModel)]="this.serv_cat.selectedCategoria.posicion">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion" class="col-form-label">Descripción:</label>
+                        <textarea class="form-control" name="descripcion" [(ngModel)]="this.serv_cat.selectedCategoria.descripcion"></textarea>
+                    </div>
+                    <img *ngIf="this.serv_cat.selectedCategoria.imagen" class="img" src="{{ this.serv_cat.selectedCategoria.imagen }} ">
+                    <input type="hidden" name="photourl" [(ngModel)]="this.serv_cat.selectedCategoria.imagen">
+
+                    <div class="form-group">
+                        <h5>Seleccionar imagen:</h5>
+                        <input class="hi" type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                    </div>
+                    <div class="progress">
+                        <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                        </div>
+                    </div>
+                    <br>
+                    <!-- <input #imageUser type="hidden" [value]="urlImage | async"> -->
+                    <br>
+                    <div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button> &nbsp;
+                    </div>
+
+                    <div class="oril">
+                        <!-- <button type="hidden" class="btn btn-secondary" #btnClose data-dismiss="modal">Cerrar</button> -->
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

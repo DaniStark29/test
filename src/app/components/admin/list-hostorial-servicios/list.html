@@ -1,0 +1,271 @@
+<div class="jumbotron">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Servicios Terminados</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profile">Cancelados</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade show active" id="home">
+            <br>
+            <h3 class="display-6"> <i class="fa fa-history"></i> Historial de Registros de los servicios pagados
+            </h3> <br>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group row pad-10">
+                        <!--Buscadores-->
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="&#xf002; Buscar servicio por clave..." style="font-family:Arial, FontAwesome" name="filterPost" [(ngModel)]="filterPost">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="&#xf002; Buscar servicio por cliente" style="font-family:Arial, FontAwesome" name="filterPost1" [(ngModel)]="filterPost1">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="&#xf002; Buscar servicio por repartidor" style="font-family:Arial, FontAwesome" name="filterPost2" [(ngModel)]="filterPost2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group row pad-10">
+                        <!--Buscadores-->
+                        <div class="col-2">
+                            <span>
+              <p>Fecha de inicio</p>
+            </span>
+                            <input type="date" class="form-control" style="font-family: Arial" [(ngModel)]="fechaInicio">
+                        </div>
+                        <div class="col-2">
+                            <span>
+              <p>Fecha de termino</p>
+            </span>
+                            <input type="date" class="form-control" style="font-family: Arial" [(ngModel)]="fechaFin">
+                        </div>
+                        <div class="col-2 bt">
+                            <button class="btn btn-primary" (click)="fechas(fechaInicio, fechaFin)" data-toggle="modal" data-target="#modalFilter"><i class="fa fa-search"></i> Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row pad-10">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-active table-sm table-hover w-75">
+                        <thead>
+                            <tr>
+                                <th scope="col">Clave</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Repartidor</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Método de pago</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let pedido of pedidos | filterServiciosDia: filterPost | paginate: { itemsPerPage: 10, currentPage: p1 } " class="table-light">
+                                <ng-container *ngFor="let usuario of usuarios | serviciohUsuario: filterPost1">
+                                    <ng-container *ngIf="usuario.uid == pedido.uidCliente || usuario.uid == pedido.uidRestaurante && pedido.abierto">
+                                        <ng-container *ngFor="let repartidor of repartidores | serviciohRepartidor: filterPost2">
+                                            <ng-container *ngIf="repartidor.uid == pedido.uidRepartidor">
+                                                <th scope="row"> {{ pedido.clave }} </th>
+                                                <td *ngIf="usuario.uid == pedido.uidCliente || usuario.uid == pedido.uidRestaurante">
+                                                    {{ usuario.username }} {{ usuario.lastname }} </td>
+                                                <td *ngIf="repartidor.uid == pedido.uidRepartidor"> {{ repartidor.username }} {{ repartidor.lastname }} </td>
+                                                <td>{{ pedido.fecha | date: 'dd/MM/yy' }} </td>
+                                                <td *ngIf="pedido.tipo && pedido.abierto == null"><img class="iconTi" src="../../../../assets/imgs/tipo1.png" title="Servicio pide lo que quieras."></td>
+                                                <td *ngIf="pedido.abierto == 'Abierto plataforma'"><img class="iconTi" src="../../../../assets/imgs/tipo2.png" title="Servicio de convenio."></td>
+                                                <!-- Estados de pide lo que quiera -->
+                                                <td *ngIf="pedido.metodo_pago == 'Efectivo'"><img class="iconTi" src="../../../../assets/imgs/efectivo.png" title="Pago en efectivo"></td>
+                                                <td *ngIf="pedido.metodo_pago == 'Tarjeta'"><img class="iconTi" src="../../../../assets/imgs/tarjeta-de-credito.png" title="Pago en tarjeta de crédito.">
+                                                </td>
+                                                <td *ngIf="pedido.estatus == 'Terminado'"><span class="badge badge-success">Terminado</span>
+                                                </td>
+                                                <td *ngIf="pedido.estatus == 'Pagado'"><span class="badge badge-success">Terminado</span>
+                                                </td>
+
+                                                <td *ngIf="pedido.estatus == 'Cancelado'"><span class="badge badge-danger">Cancelado</span>
+                                                </td>
+                                                <td><a class="bz btn btn-outline-primary" title="Detalle del pedido." routerLink="../../servicio/{{pedido.uid}}"><i class="fa fa-caret-square-o-down"
+                            aria-hidden="true"></i> </a> </td>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="pedidos?.length == 0">
+                            <tr>
+                                <td colspan="8" class="no-data-available">No data!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="profile">
+            <br>
+            <h3 class="display-6"> <i class="fa fa-history"></i> Historial de Registros de los servicios cancelados </h3>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group row pad-10">
+                        <!--Buscadores-->
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="&#xf002; Buscar servicio por clave..." style="font-family:Arial, FontAwesome" name="filterPost" [(ngModel)]="filterPost">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="&#xf002; Buscar servicio por cliente" style="font-family:Arial, FontAwesome" name="filterPost1" [(ngModel)]="filterPost1">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="&#xf002; Buscar servicio por repartidor" style="font-family:Arial, FontAwesome" name="filterPost2" [(ngModel)]="filterPost2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group row pad-10">
+                        <!--Buscadores-->
+                        <div class="col-2">
+                            <span>
+              <p>Fecha de inicio</p>
+            </span>
+                            <input type="date" class="form-control" style="font-family: Arial" [(ngModel)]="fechaInicio">
+                        </div>
+                        <div class="col-2">
+                            <span>
+              <p>Fecha de termino</p>
+            </span>
+                            <input type="date" class="form-control" style="font-family: Arial" [(ngModel)]="fechaFin">
+                        </div>
+                        <div class="col-2 bt">
+                            <button class="btn btn-primary" (click)="fechas2(fechaInicio, fechaFin)" data-toggle="modal" data-target="#modalFilter"><i class="fa fa-search"></i> Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row pad-10">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-active table-sm table-hover w-75">
+                        <thead>
+                            <tr>
+                                <th scope="col">Clave</th>
+                                <th scope="col">Cliente</th>
+                                <!-- <th scope="col">Repartidor</th> -->
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Método de pago</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let pedido of pedidosCancel | filterServiciosDia: filterPost | paginate: { itemsPerPage: 25, currentPage: p1 }" class="table-light">
+                                <ng-container *ngFor="let usuario of usuarios | serviciohUsuario: filterPost1">
+                                    <ng-container *ngIf="usuario.uid == pedido.uidCliente || usuario.uid == pedido.uidRestaurante && pedido.abierto">
+                                        <!-- <ng-container *ngFor="let repartidor of repartidores | serviciohRepartidor: filterPost2">
+                                            <ng-container *ngIf="repartidor.uid == pedido.uidRepartidor"> -->
+                                        <th scope="row"> {{ pedido.clave }} </th>
+                                        <td *ngIf="usuario.uid == pedido.uidCliente || usuario.uid == pedido.uidRestaurante">
+                                            {{ usuario.username }} {{ usuario.lastname }} </td>
+                                        <!-- <td *ngIf="repartidor.uid == pedido.uidRepartidor"> {{ repartidor.username }} {{ repartidor.lastname }} </td> -->
+                                        <td>{{ pedido.fecha | date: 'dd/MM/yy' }} </td>
+                                        <td *ngIf="pedido.tipo && pedido.abierto == null"><img class="iconTi" src="../../../../assets/imgs/tipo1.png" title="Servicio pide lo que quieras."></td>
+                                        <td *ngIf="pedido.abierto == 'Abierto plataforma'"><img class="iconTi" src="../../../../assets/imgs/tipo2.png" title="Servicio de convenio."></td>
+                                        <!-- Estados de pide lo que quiera -->
+                                        <td *ngIf="pedido.metodo_pago == 'Efectivo'"><img class="iconTi" src="../../../../assets/imgs/efectivo.png" title="Pago en efectivo"></td>
+                                        <td *ngIf="pedido.metodo_pago == 'Tarjeta'"><img class="iconTi" src="../../../../assets/imgs/tarjeta-de-credito.png" title="Pago en tarjeta de crédito."></td>
+                                        <td *ngIf="pedido.estatus == 'Terminado'"><span class="badge badge-success">Terminado</span></td>
+                                        <td *ngIf="pedido.estatus == 'Cancelado'"><span class="badge badge-danger">Cancelado</span></td>
+                                        <td><a class="bz btn btn-outline-primary" title="Detalle del pedido." routerLink="../../servicio/{{pedido.uid}}"><i class="fa fa-caret-square-o-down"
+                        aria-hidden="true"></i> </a> </td>
+                                    </ng-container>
+                                </ng-container>
+                                <!-- </ng-container>
+                                </ng-container> -->
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="pedidosCancel?.length == 0">
+                            <tr>
+                                <td colspan="8" class="no-data-available">No data!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<div *ngIf="this.ver == true" class="modal" id="modalFilter">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="row"></div>
+            <div class="modal-header">
+                <h5 class="modal-title">Servicios de {{ this.fechaInicio | date: 'dd/MM/yy' }} a {{ this.fechaFin | date: 'dd/MM/yy' }} </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="form group row pad-10">
+                            <div class="col-4" *ngFor="let lista of listas | paginate: { itemsPerPage: 3, currentPage: p, totalItems: i }; let i = index">
+                                <div class="card mb-3">
+                                    <ul class="list-group list-group-flush">
+
+                                        <li class="list-group-item text-muted">Servicio: {{ i + 1 }} </li>
+                                        <li class="list-group-item">Clave: {{ lista.clave }} <span></span></li>
+                                        <ng-container *ngFor="let usuario of usuarios">
+                                            <ng-container *ngIf="usuario.uid == lista.uidCliente">
+                                                <li class="list-group-item">Cliente: {{ usuario.username }} {{ usuario.lastname }} </li>
+                                            </ng-container>
+                                            <ng-container *ngIf="usuario.uid == lista.uidRepartidor" }>
+                                                <li class="list-group-item">Repartidor: {{ usuario.username }} {{ usuario.lastname }} </li>
+                                            </ng-container>
+                                        </ng-container>
+                                        <li class="list-group-item">Fecha:
+                                            <p>{{ lista.fecha | date: 'medium'}} </p>
+                                        </li>
+                                        <li *ngIf="lista.tipo == 1" class="list-group-item">Tipo: <img class="iconTi" src="../../../../assets/imgs/tipo1.png" title="Servicio pide lo que quieras."></li>
+                                        <li *ngIf="lista.tipo == 2" class="list-group-item">Tipo: <img class="iconTi" src="../../../../assets/imgs/tipo2.png" title="Servicio pide lo que quieras."></li>
+                                        <li *ngIf="lista.metodo_pago == 'Efectivo'" class="list-group-item">Método de pago: <img class="iconTi" src="../../../../assets/imgs/efectivo.png" title="Pago en efectivo"></li>
+                                        <li *ngIf="lista.metodo_pago == 'Tarjeta'" class="list-group-item">Método de pago: <img class="iconTi" src="../../../../assets/imgs/tarjeta-de-credito.png" title="Pago con tarjeta">
+                                        </li>
+                                        <li *ngIf="lista.estatus == 'Terminado'" class="list-group-item">Estado: <span class="badge badge-success color:black;">Terminado</span> </li>
+                                        <li *ngIf="lista.estatus == 'Cancelado'" class="list-group-item">Estado: <span class="badge badge-danger color:black;">Cancelado</span> </li>
+                                        <div class="card-body text-right">
+                                            <a title="Detalle del pedido." routerLink="../../servicio/{{lista.uid}}" target="blank" class="card-link">Ver detalle</a>
+                                        </div>
+                                    </ul>
+                                    <!-- <div class="card-body">
+                                        <a href="#" class="card-link">Card link</a>
+                                        <a href="#" class="card-link">Another link</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        2 days ago
+                                    </div> -->
+                                </div>
+                            </div>
+                            <pagination-controls (pageChange)="p = $event" directionLinks="true" autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>

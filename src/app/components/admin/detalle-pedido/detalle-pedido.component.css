@@ -1,0 +1,92 @@
+mat-grid-tile {
+    background: lightblue;
+}
+
+.example-card {
+    border: solid 4px black;
+    display: inline-block;
+    /* max-width: 680px; */
+    margin-left: -1em;
+    margin-right: -1em;
+    text-align: center;
+}
+
+.esq1 {
+    text-align: right;
+    margin-right: 1.5em;
+    margin-top: -2em;
+}
+
+.log {
+    height: 90px;
+    width: 90px;
+}
+
+.log1 {
+    height: 250px;
+    width: 250px;
+}
+
+.esq {
+    text-align: right;
+    margin-top: -2em;
+}
+
+
+/* span {
+    height: auto;
+    width: auto;
+    text-align: center;
+} */
+
+.prd {
+    margin-left: -1.9em;
+}
+
+.prd2 {
+    margin-left: -1.9em;
+}
+
+.esq3 {
+    text-align: right;
+    width: 700px;
+    margin-left: 52em;
+    /* margin-top: -3em;  */
+}
+
+.esq4 {
+    text-align: right;
+    /* width: 700px;
+    margin-left: 52em; */
+    /* margin-top: -3em;  */
+}
+
+agm-map {
+    height: 400px;
+}
+
+p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: unset;
+}
+
+b {
+    font-size: 13px;
+}
+
+h6 {
+    font-family: monospace;
+}
+
+.ticket {
+    height: 250px;
+    width: 150px;
+    border-radius: 1px;
+    border: 5px solid #E36485;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    background-color: black;
+}

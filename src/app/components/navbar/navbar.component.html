@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#" routerLink="admin/home-admin">
+        <img src="../assets/imgs/logo_nav.png" width="50" height="50" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" *ngIf="!isLogged">
+                <a class="nav-link" routerLink="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+            </li>
+            <li class="nav-item" *ngIf="isLogged">
+                <a class="nav-link" routerLink="admin/home-admin"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+            </li>
+            <li class="nav-item" *ngIf="!isLogged">
+                <a class="nav-link" routerLink="/user/login">Login </a>
+            </li>
+            <ng-template #NoAdmin>
+                <li class="nav-item" *ngIf="isLogged">
+                    <a class="nav-link" routerLink="restaurante/restaurante-list-menu"><i class="fa fa-book"
+                            aria-hidden="true"></i> Menú</a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="isLogged">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Servicios <i class=" dw fa fa-chevron-down"
+                            aria-hidden="true"></i></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" routerLink="admin/list-pedidos-res" href="#"><i
+                                class="fa fa-motorcycle" aria-hidden="true"></i> Pedidos</a>
+                        <a class="dropdown-item" href="#" routerLink="convenio/list-historial-servicios"><i
+                                class="fa fa-history" aria-hidden="true"></i> Historial de pedidos</a>
+                    </div>
+                </li>
+                <li class="nav-item" *ngIf="isLogged">
+                    <a class="nav-link" routerLink="restaurante/cortes-convenio"><i class="fa fa-bar-chart" aria-hidden="true"></i> Cortes</a>
+                </li>
+            </ng-template>
+
+
+            <li *ngIf="isLogged && isAdmin == true; else NoAdmin" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-address-card-o" aria-hidden="true"></i> Administración de
+                    Usuarios <i class=" dw fa fa-chevron-down" aria-hidden="true"></i></a>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+                    <a class="dropdown-item" routerLink="admin/list-repartidores" href="#"><i class="fa fa-motorcycle"
+                            aria-hidden="true"></i> Repartidores</a>
+                    <a class="dropdown-item" routerLink="admin/list-restaurantes"><i class="fa fa-cutlery"
+                            aria-hidden="true"></i> Convenios</a>
+                    <a class="dropdown-item" routerLink="admin/list-administradores" href="#"><i
+                            class="fa fa-user-circle-o" aria-hidden="true"></i> Administradores</a>
+                    <a class="dropdown-item" routerLink="admin/list-clientes" href="#"><i class="fa fa-male"
+                            aria-hidden="true"></i> Clientes</a>
+                    <div class="dropdown-divider"></div>
+                    <!-- <a class="dropdown-item" routerLink="admin/list-transportes" href="#"><i class="fa fa-car" aria-hidden="true"></i>Transportes</a> -->
+                </div>
+            </li>
+            <!-- <li class="nav-item" *ngIf="isLogged && isAdmin == true; ">
+                <a class="nav-link" routerLink="admin/list-sucursal"><i class="fa fa-building" aria-hidden="true"></i> Sucursales</a>
+            </li> -->
+            <li *ngIf="isLogged && isAdmin == true" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Admin Servicios <i
+                        class=" dw fa fa-chevron-down" aria-hidden="true"></i></a>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+                    <a class="dropdown-item" routerLink="admin/list-servicios" href="#"><i class="fa fa-globe"
+                            aria-hidden="true"></i> Servicios</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="admin/list-historial-servicios" href="#"><i
+                            class="fa fa-history" aria-hidden="true"></i> Historial</a>
+                </div>
+            </li>
+
+            <li class="nav-item" *ngIf="isLogged && isAdmin == true;">
+                <a class="nav-link" routerLink="admin/list-cortes"><i class="fa fa-money" aria-hidden="true"></i>
+                    Cortes</a>
+            </li>
+
+            <li *ngIf="isLogged" class="nav-item dropdown mr-3">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span style="font-size: 1em; color: #E36485;"><i
+                            class="fa fa-user"></i></span> + Usuario... <i class=" dw fa fa-chevron-down"
+                        aria-hidden="true"></i> </a>
+
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+                    <div style="text-align: center;" class="col-12">
+                        <img style="height: 75px; width: 75px;" src="{{usuario?.photourl}}" class="rounded-circle img-thumbnail" alt="profile">
+                    </div>
+                    <a class="dropdown-item" routerLink="/user/profile" href="#"><i class="fa fa-address-card "
+                            aria-hidden="true"></i> Perfil</a>
+
+                    <div class="dropdown-divider "></div>
+                    <a class="dropdown-item " href="# " (click)="onLogout()"><i class="fa fa-sign-out "
+                            aria-hidden="true "></i> Cerrar sesión</a>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

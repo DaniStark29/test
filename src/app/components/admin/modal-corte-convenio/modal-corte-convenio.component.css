@@ -1,0 +1,9 @@
+.modal-content {
+    width: 170%;
+    margin-left: -35%;
+    /* zoom: 80%; */
+}
+
+span {
+    font-display: 2em;
+}

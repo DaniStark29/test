@@ -1,0 +1,69 @@
+mat-grid-tile {
+    /* background: #ff864e; */
+    border-radius: 25px;
+    /* border-start-start-radius: 25px; */
+}
+
+.example-card {
+    max-width: 150px;
+}
+
+.im {
+    height: 120px;
+    width: 100px;
+}
+
+
+/* .esq {
+    text-align: left;
+    margin-top: -3.9em;
+    background-image: url('../../../../assets/imgs/carretera2.jpeg')
+} */
+
+.esq {
+    height: auto;
+    width: 100%;
+    border-radius: 2px;
+}
+
+.esq1 {
+    margin-top: -3.5em;
+    margin-bottom: 1em;
+    margin-left: -1.5em;
+}
+
+.bringme {
+    color: #ff793f;
+    text-align: center;
+}
+
+pad-10 {
+    padding: 10px;
+}
+
+agm-map {
+    height: 600px;
+}
+
+
+/* .side-bar {
+    display: inline-block;
+    margin-top: -50%;
+    margin-left: 20%;
+    width: 80%;
+    padding-left: 0px;
+    overflow-x: hidden;
+} */
+
+.badge-light {
+    zoom: 2;
+}
+
+.badge-info {
+    zoom: 2;
+}
+
+.ml-1,
+.mx-1 {
+    margin-left: 14rem !important;
+}

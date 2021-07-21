@@ -1,0 +1,78 @@
+<ngx-alerts></ngx-alerts>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div style="padding-top: 2em;" class="text-center">
+                <h1>
+                    <span style="font-size: 1em; color: #E36485;"><i class="fa fa-cutlery"></i></span> {{restaurante.username}}
+                </h1>
+            </div>
+            <form name="formAdmin" #formAdmin="ngForm" (ngSubmit)="cargarImagenes(formAdmin)">
+                <div class="form-group">
+                    <label for="nombre"><b>Nombre: </b></label>
+                    <input type="text" name="username" class="form-control" placeholder="La Fondita" [(ngModel)]="restaurante.username">
+                </div>
+                <div class="form-group">
+                    <label for="contacto"><b>Contacto: </b> </label>
+                    <input type="text" name="contacto" class="form-control" placeholder="Maria Gonzalez" [(ngModel)]="restaurante.contacto">
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label><b>Ingrese dirección de entrega:</b> </label>
+                        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Buscar Dirección" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" required="true" #search>
+                    </div>
+                    <agm-map [latitude]="restaurante.direccion.latitude" [longitude]="restaurante.direccion.longitude" [zoom]="zoom">
+                        <agm-marker [latitude]="restaurante.direccion.latitude" [longitude]="restaurante.direccion.longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                    </agm-map>
+                    <h5>Address: {{restaurante.address}}</h5>
+                    <div>Latitude: {{restaurante.direccion.latitude}}</div>
+                    <div>Longitude: {{restaurante.direccion.longitude}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="telefono"><b>Teléfono: </b></label>
+                    <input type="number" name="phone" class="form-control" placeholder="4775642879" [(ngModel)]="restaurante.phone">
+                </div>
+                <div class="form-group">
+                    <label for="categoria"><b>Selecciona una categoría:</b> </label>
+                    <select class="form-control" id="categoria" name="categoria" [(ngModel)]="restaurante.uidCategoria">
+                  <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{ categoria.nombre }} </option>
+                </select>
+                </div>
+                <div class="form-group">
+                    <label for="hora_abierto"><b>Hora de abrir: </b> </label>
+                    <input type="time" class="form-control" name="hora_abierto" [(ngModel)]="restaurante.hora_abierto">
+                </div>
+                <div class="form-group">
+                    <label for="hora_cerrar"><b>Hora de cerrar:</b> </label>
+                    <input type="time" class="form-control" name="hora_cerrar" [(ngModel)]="restaurante.hora_cerrar">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com.mx" [(ngModel)]="restaurante.email" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" name="password" class="form-control" placeholder="" [(ngModel)]="restaurante.password" required minlength="5" maxlength="10">
+                </div> -->
+                <hr>
+                <div class="text-center">
+                    <img [src]="restaurante.photourl" class="rounded" width="20%" height="20%">
+                </div>
+                <div class="form-group">
+                    <h5>Seleccionar imagen:</h5>
+                    <input class="form-control" type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                </div>
+                <div class="progress">
+                    <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                        <!-- <span class="progressText" *ngIf="urlImage | async">
+              Ok!!</span> -->
+                    </div>
+                </div>
+                <div style=" padding-top: 2em; padding-bottom: 2em;">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar</button> &nbsp;
+                    <!-- <button (click)="limpiarArchivos()" class="btn btn-danger">Limpiar</button> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

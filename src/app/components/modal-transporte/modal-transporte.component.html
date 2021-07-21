@@ -1,0 +1,45 @@
+<div class="modal fade" id="modalTrnsporte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    {{!this.dataTra.selectedTransporte.id ? 'Nueva Sucursal' : 'Actualizar Sucursal'}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form name="formTransporte" #formTransporte="ngForm" (ngSubmit)="onSaveTransporte(formTransporte)">
+                    <input type="hidden" name="id" [(ngModel)]="this.dataTra.selectedTransporte.id">
+
+                    <div class="form-group">
+                        <label for="tipo">Tipo</label>
+                        <input type="text" name="tipo" class="form-control" placeholder="Moto, Camioneta, etc" [(ngModel)]="this.dataTra.selectedTransporte.tipo">
+                    </div>
+                    <div class="form-group">
+                        <label for="marca">Marca</label>
+                        <input type="text" name="marca" class="form-control" placeholder="Ford, Italika" [(ngModel)]="this.dataTra.selectedTransporte.marca">
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" name="modelo" class="form-control" placeholder="S10, Lux, etc" [(ngModel)]="this.dataTra.selectedTransporte.modelo">
+                    </div>
+                    <div class="form-group">
+                        <label for="placa">Placa</label>
+                        <input type="text" name="placa" class="form-control" placeholder="S40-12-52" [(ngModel)]="this.dataTra.selectedTransporte.placa">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion" class="col-form-label">Descripcion:</label>
+                        <textarea class="form-control" name="descripcion" [(ngModel)]="this.dataTra.selectedTransporte.descripcion"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" #btnClose data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

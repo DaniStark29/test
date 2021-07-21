@@ -1,0 +1,72 @@
+<div class="modal fade" id="modalRepartidor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <ngx-alerts></ngx-alerts>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nuevo Repartidor
+                    <!-- {{!this.dataApi.selectedSucursal.id ? 'Nueva Sucursal' : 'Actualizar Sucursal'}} -->
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form name="formRepartidor" #formRepartidor="ngForm" (ngSubmit)="onSaveRepartidor(formRepartidor)">
+                    <!-- <input type="hidden" name="id" [(ngModel)]="this.dataApi.selectedSucursal.id"> -->
+                    <div class="form-group">
+                        <label for="link_amazon">Nombre</label>
+                        <input type="text" name="username" class="form-control" placeholder="Juan Eduardo" [(ngModel)]="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_amazon">Apellido</label>
+                        <input type="text" name="lastname" class="form-control" placeholder="Martinez Gutierrez" [(ngModel)]="lastname">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_amazon">Dirección</label>
+                        <input type="text" name="address" class="form-control" placeholder="Paseos del Moral # 123" [(ngModel)]="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_amazon">Teléfono</label>
+                        <input type="number" name="phone" class="form-control" placeholder="4775642879" [(ngModel)]="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="placa">Marca de tranporte</label>
+                        <input type="text" name="marca" class="form-control" placeholder="Italika" [(ngModel)]="marca">
+                    </div>
+                    <div class="form-group">
+                        <label for="placa">Placa</label>
+                        <input type="text" name="placa" class="form-control" placeholder="ASD-987-98" [(ngModel)]="placa">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_amazon">Correo electrónico</label>
+                        <input type="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com.mx" [(ngModel)]="email" required minlength="8">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_amazon">Contraseña</label>
+                        <input type="password" name="password" class="form-control" placeholder="" [(ngModel)]="password" required minlength="5" maxlength="10">
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <h5>Seleccionar imagen:</h5>
+                        <input class="hi" type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                    </div>
+                    <div class="progress">
+                        <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                            <!-- <span class="progressText" *ngIf="urlImage | async">
+          Ok!!</span> -->
+                        </div>
+                    </div>
+                    <br>
+                    <input #imageUser type="hidden" [value]="urlImage | async">
+                    <!-- <button *ngIf="urlImage | async; else btnDisabled" type="submit" class="btn btn-lg btn-primary btn-block">Registrar</button> -->
+                    <button type="submit" class="btn btn-lg btn-primary btn-block">Registrar</button>
+                    <ng-template #btnDisabled>
+                        <button type="submit" disabled=true class="btn btn-lg btn-secondary btn-block">Registrar</button>
+                    </ng-template>
+                    <!-- <button type="hidden" class="btn btn-secondary" #btnClose data-dismiss="modal">Cerrar</button> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

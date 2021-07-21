@@ -1,0 +1,145 @@
+<div class="modal" id="modalCorteConvenio">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Corte al convenio </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p>Filtra por fecha</p>
+                <div class="row pad-10 m1">
+                    <!--Buscadores-->
+                    <div class="col-4">
+                        <span class="sp"><p>Fecha de inicio</p></span>
+                        <input type="date" class="form-control" style="font-family: Arial" [(ngModel)]="fechaInicio">
+                    </div>
+                    <div class="col-4">
+                        <span class="sp"><p>Fecha de termino</p></span>
+                        <input type="date" class="form-control" style="font-family: Arial" [(ngModel)]="fechaFin">
+                    </div>
+                    <div class="col-4 m2">
+                        <button class="btn btn-primary" (click)="corteFiltroConvenio(fechaInicio, fechaFin)"><i class="fa fa-search"></i> Filtrar</button>
+                        <!-- <button class="btn btn-primary" (click)="resetFiltro()" data-toggle="modal" data-target="#modalListCorte"><i class="fa fa-search"></i> Reset </button> -->
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="col" id="print-section">
+                    <!-- Datos del convenio  -->
+                    <ng-container *ngFor="let convenio of convenio">
+                        <div class="row pad-10">
+                            <div class="col-6">
+                                <h3>
+                                    Corte de
+                                    <small class="text-muted">{{ convenio.username }}</small>
+                                </h3>
+                                <blockquote class="blockquote">
+                                    <p><strong>Nombre contacto: </strong>{{ convenio.contacto }}.</p>
+                                    <p><strong>Dirección: </strong>{{ convenio.address }}.</p>
+                                    <p><strong>Email: </strong>{{ convenio.email }}.</p>
+                                    <p><strong>Teléfono: </strong>{{ convenio.phone }}.</p>
+                                </blockquote>
+                            </div>
+                            <div class="col-3">
+                                <div style="">
+                                    <img style="height: 95px; width: auto;" [src]="convenio.photourl" alt="{{convenio.username}} ">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div>
+                                    <button type="button" class="btn btn-outline-primary" title="Imprimir" printSectionId="print-section" ngxPrint><i class="fa fa-print" aria-hidden="true"></i></button>
+                                </div>
+                                <br>
+                                <table class="table table-warning table-sm table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Concepto</th>
+                                            <th scope="col">Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="table-success">
+                                            <td>No. servicios</td>
+                                            <td>{{ noServicios }} </td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td>Costo x Servicio</td>
+                                            <td>{{ costoxservicio | currency }} </td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td>Total x Servicios</td>
+                                            <td>{{ productoServicios | currency}}</td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td>Total x Productos</td>
+                                            <td>{{ totalServicios | currency}}</td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td>Utilidad</td>
+                                            <td><span class="badge badge-pill badge-success">{{ diferenciaConvenio | currency}} </span></td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td>Costo por suscripción</td>
+                                            <td> {{ suscripcion | currency }} </td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td><b>Total a pagar</b></td>
+                                            <td><span class="badge badge-pill badge-primary">{{ suscripcion + productoServicios | currency }} </span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <table class="table table-warning table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Clave</th>
+                                <th scope="col">UID</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Método de pago</th>
+                                <th scope="col">Estatus</th>
+                                <th scope="col">Total productos</th>
+                                <th scope="col">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let corte of cortes | paginate: { itemsPerPage: 25, currentPage: p } ; index as i" class="table-light">
+                                <th scope="row">{{ i + 1 }} </th>
+                                <td scope="row">{{ corte.username }} </td>
+                                <td scope="row">{{ corte.uid }} </td>
+                                <td scope="row">{{ corte.fecha | date: 'short' }} </td>
+                                <td scope="row">{{ corte.metodo_pago }} </td>
+                                <td scope="row"><span class="badge badge-pill badge-success"> {{ corte.estatus }}</span></td>
+                                <td scope="row">{{ corte.totalProductos | currency }} </td>
+                                <td scope="row"><a class="bz btn btn-outline-primary" target="blank" title="Detalle del servicio." routerLink="../../servicio/{{corte.uid}}"><i class="fa fa-caret-square-o-down" aria-hidden="true"></i> </a></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><b>Total: </b></td>
+                                <td><span class="badge badge-pill badge-primary">{{totalServicios | currency}} </span> </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="cortes?.length == 0">
+                            <tr>
+                                <td colspan="8" class="no-data-available">Esperando recopilación de servicios...</td>
+                            </tr>
+                            <tbody>
+                    </table>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" (click)="get()" class="btn btn-primary">Save changes</button> -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

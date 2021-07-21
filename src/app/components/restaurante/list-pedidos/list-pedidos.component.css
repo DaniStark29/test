@@ -1,0 +1,36 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+input {
+    border-radius: 25px;
+}
+
+button {
+    border-radius: 25px;
+}
+
+agm-map {
+    height: 300px;
+}
+
+.modal-content {
+    width: 263%;
+    margin-left: -79%;
+}
+
+.secc {
+    margin-top: 3em;
+    margin-right: 110px;
+    margin-left: 110px;
+}
+
+.secc1 {
+    margin-right: 110px;
+    margin-left: 110px;
+}

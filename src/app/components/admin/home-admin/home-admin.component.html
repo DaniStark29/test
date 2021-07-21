@@ -1,0 +1,174 @@
+<section class="side-bar">
+    <ng-container *ngIf="usuario.tipo == 1">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active text-right">
+                <a title="Gestion de banners" routerLink="../config-banner"><img style="height: 25px; width:auto;" src="../../../../assets/imgs/navegador.png" alt="Gestion de banners"></a>
+            </li>
+            <li class="breadcrumb-item active text-right">
+                <a title="Gestion de servicio" routerLink="../config-servicio"><img style="height: 28px; width:auto;" src="../../../../assets/imgs/ajustes.png" alt="Gestion de servicio"></a>
+            </li>
+            <li class="breadcrumb-item active text-right">
+                <a title="Gestión categorías convenio" routerLink="../convenio-categoria"><img style="height: 28px; width:auto;" src="../../../../assets/imgs/categoria.png" alt="Gestión categorías convenio"></a>
+            </li>
+        </ol>
+    </ng-container>
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>¡Bienvenido! </strong>
+        <h3>{{ usuario.username }} </h3> <strong>Buen día!</strong>
+    </div>
+    <!-- Admin -->
+    <ng-container *ngIf="usuario.tipo == 1">
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Los servicios!</strong> Así estamos en la configuración de los servicios.
+        </div>
+        <div style="">
+            <div class="row pad-10 ml-1 mb-2">
+                <div style="border-radius: 15px; margin: 5px 5px;" class="text-muted col-sm-3 col-md-3 bg-light">
+                    <div class="thumbnail text-center">
+                        <img style="height: 75px; width:auto;" src="../../../../assets/imgs/comprar.png" alt="...">
+                        <div class="caption" *ngFor="let tarifa of tarifas">
+                            <h3>Precios del servicio</h3>
+                            Distancia:
+                            <span class="badge badge-info mb-2">{{  tarifa.distancia | currency }} </span><br> Tiempo:
+                            <span class="badge badge-info mb-2">{{ tarifa.tiempo | currency }} </span>
+                            <p><a href="#" routerLink="../config-servicio" class="btn btn-primary" role="button">Administrar</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-radius: 15px; margin: 5px 5px;" class="text-muted col-sm-3 col-md-3 bg-light">
+                    <div class="thumbnail text-center">
+                        <img style="height: 75px; width:auto;" src="../../../../assets/imgs/arranque.png" alt="...">
+                        <div class="caption" *ngFor="let costo of costos">
+                            <h3>Costo de arranque</h3>
+                            <p>Costo: </p>
+                            <span class="badge badge-info mb-2">{{ costo.arranque | currency }} </span>
+                            <p><a href="#" routerLink="../config-servicio" class="btn btn-primary" role="button">Cambiar</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-radius: 15px; margin: 5px 5px;" class="text-muted col-sm-3 col-md-3 bg-light">
+                    <div class="thumbnail text-center">
+                        <img style="height: 75px; width:auto;" src="../../../../assets/imgs/comprador.png" alt="...">
+                        <div class="caption" *ngFor="let pago of pagos">
+                            <h3>Métodos de pago</h3>
+                            <p><img class="iconTi" src="../../../../assets/imgs/efectivo.png" title="Pago en efectivo">
+                                <span class="badge badge-success" *ngIf="pago.Efectivo == true"> Habilitado</span>
+                                <span class="badge badge-danger" *ngIf="pago.Efectivo == false"> No dispoible</span>
+                            </p>
+                            <p><img class="iconTi" src="../../../../assets/imgs/tarjeta-de-credito.png" title="Pago en tarjeta de crédito.">
+                                <span class="badge badge-success" *ngIf="pago.Tarjeta == true"> Habilitado</span>
+                                <span class="badge badge-danger" *ngIf="pago.Tarjeta == false"> No dispoible</span>
+                            </p>
+                            <p><a href="#" routerLink="../config-servicio" class="btn btn-primary" role="button">Ver</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- Terminan alerts de admin  -->
+
+    <div>
+        <div class="esq1">
+            <img class="esq" src="../../../../assets/imgs/BannerBringM.png" alt="">
+        </div>
+        <!-- Convenio -->
+        <div class="container">
+            <ng-container *ngIf="usuario.tipo == 3">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Te mostramos algo de lo que ha pasado!</strong> Así estamos al día.
+                </div>
+                <div>
+                    <mat-grid-list cols="3" rowHeight="2:1">
+                        <mat-grid-tile>
+                            <div style="border-radius: 15px; margin: 5px 5px;" class="text-white col-sm-10 col-md-10 bg-info">
+                                <div class="mt-3 thumbnail text-center">
+                                    <mat-icon class="mr-5" matBadge="{{  menus.length }}" matBadgeColor="warn">
+                                        <img style="height: 75px; width:auto;" src="../../../../assets/imgs/dispositivos.png" alt="...">
+                                    </mat-icon>
+                                    <div class="mt-5 caption">
+                                        <h3>Productos en el menú</h3>
+                                        <button class="md-1" routerLink="../../restaurante/restaurante-list-menu" mat-flat-button color="accent">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">arrow_forward</mat-icon>
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <div style="border-radius: 15px; margin: 5px 5px;" class="text-white col-sm-10 col-md-10 bg-info">
+                                <div class="mt-3 thumbnail text-center">
+                                    <mat-icon class="mr-5" matBadge="{{ servicios.length }}" matBadgeColor="warn">
+                                        <img style="height: 75px; width:auto;" src="../../../../assets/imgs/mapa.png" alt="...">
+                                    </mat-icon>
+                                    <div class="mt-5 caption">
+                                        <h3>Total de servicios</h3>
+                                        <button class="md-1" routerLink="../../convenio/list-historial-servicios" mat-flat-button color="accent">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">arrow_forward </mat-icon>
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <div style="border-radius: 15px; margin: 5px 5px;" class="text-white col-sm-10 col-md-10 bg-info">
+                                <div class="mt-3 thumbnail text-center">
+                                    <mat-icon class="mr-5" matBadge="{{ serviciosapp.length }}" matBadgeColor="warn">
+                                        <img style="height: 75px; width:auto;" src="../../../../assets/imgs/dispositivos.png" alt="...">
+                                    </mat-icon>
+                                    <div class="mt-5 caption">
+                                        <h3>Servicios por app</h3>
+                                        <button class="md-1" routerLink="../../convenio/list-historial-servicios" mat-flat-button color="accent">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">arrow_forward</mat-icon>
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+
+                </div>
+            </ng-container>
+        </div>
+        <hr class="my-4">
+        <!-- Terminan alerts de convenio  -->
+        <ng-container *ngIf="usuario.tipo == 1">
+            <div class="row pad-10">
+                <div class="col-8">
+                    <h4 class="list-group-item list-group-item-action active">
+                        <i class="fa fa-globe"></i> Mapa <small *ngIf="siguiendoNombre">siguiendo a: {{ siguiendoNombre }} ID: {{ siguiendoA }} </small> </h4>
+                    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17">
+                        <agm-marker *ngFor="let repartidor of repartidores" [latitude]="repartidor.geolocalizacion._lat" [longitude]="repartidor.geolocalizacion._long"></agm-marker>
+                    </agm-map>
+                </div>
+                <div class="col-4 ">
+                    <h4 class="list-group-item list-group-item-action active"> <i class="fa fa-motorcycle"></i> Repartidores</h4>
+                    <div class="list-group">
+                        <a (click)="seguir(repartidor)" *ngFor="let repartidor of repartidores" class="list-group-item list-group-item-action">{{ repartidor.username }} {{ repartidor.lastname }} </a>
+                        <br>
+                        <button *ngIf="siguiendoNombre" (click)="dejarDeSeguir()" class="btn btn-primary btn-block">Dejar de seguir</button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Aviso!</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Pago Vencido :(</h4>
+                    No se ha realizado tu pago mensual.
+                </div>
+                <!-- <div class="modal-footer">
+                                    <button class="btn btn-lg btn-danger btn-block" (click)="onLogout()">Cerrar sesión</button>
+                                </div> -->
+            </div>
+        </div>
+    </div>
+</section>

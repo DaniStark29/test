@@ -1,0 +1,69 @@
+<div class="modal fade" id="modalMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nuevo Producto
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">Importante!</h4>
+                <p class="mb-0">Las medidas estandar para las imágenes son 65 x 65 px.</p>
+            </div>
+            <ngx-alerts></ngx-alerts>
+            <div class="modal-body">
+                <form name="formMenu" #formMenu="ngForm" (ngSubmit)="onSaveMenu(formMenu)">
+                    <input type="hidden" name="id" [(ngModel)]="this.dataMenu.selectedMenu.id">
+
+                    <input type="hidden" name="userUid" [value]="userUid" [(ngModel)]="this.dataMenu.selectedMenu.userUid">
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" placeholder="Pizza" [(ngModel)]="this.dataMenu.selectedMenu.nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio</label>
+                        <input type="number" name="precio" class="form-control" placeholder="230.00" [(ngModel)]="this.dataMenu.selectedMenu.precio">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion" class="col-form-label">Descripción:</label>
+                        <textarea class="form-control" name="descripcion" [(ngModel)]="this.dataMenu.selectedMenu.descripcion"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="custom-select" name="estado" [(ngModel)]="this.dataMenu.selectedMenu.estado">
+                              <option selected="">Selecciona el estado del producto</option>
+                              <option  value="1">Activo</option>
+                              <option value="2">Desactivado</option>
+                            </select>
+                    </div>
+                    <img *ngIf="this.dataMenu.selectedMenu.photourl" class="img" src="{{ this.dataMenu.selectedMenu.photourl }} ">
+                    <input type="hidden" name="photourl" [(ngModel)]="this.dataMenu.selectedMenu.photourl">
+
+                    <div class="form-group">
+                        <h5>Seleccionar imagen:</h5>
+                        <input class="hi" type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                    </div>
+                    <div class="progress">
+                        <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                        </div>
+                    </div>
+                    <br>
+                    <!-- <input #imageUser type="hidden" [value]="urlImage | async"> -->
+                    <br>
+                    <div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button> &nbsp;
+                    </div>
+
+                    <!-- <div class="oril">
+                        <button type="hidden" class="btn btn-secondary" #btnClose data-dismiss="modal">Cerrar</button>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

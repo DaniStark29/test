@@ -1,0 +1,76 @@
+<section class="row mt-5">
+    <ngx-alerts></ngx-alerts>
+    <div class="container">
+        <h1><span style="font-size: 1em; color:#E36485;"><i class="fa fa-sitemap"></i></span> Listado de categorías </h1>
+        <div class="row">
+            <!-- <div class="col">
+                <div class="form-group">
+                    <input type="text" name="filterPost" class="form-control" placeholder="&#xf002; Buscar..." style="font-family:Arial, FontAwesome" [(ngModel)]="filterPost">
+                </div>
+            </div> -->
+            <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalCategoria"><i class="fa fa-plus"></i> Nueva categoría</button>
+        </div>
+    </div>
+    <div class="col">
+
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort class="mat-elevation-z8">
+
+            <!-- POSICION Column -->
+            <ng-container matColumnDef="posicion">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Posición </th>
+                <td mat-cell *matCellDef="let element"> {{element.posicion}} </td>
+            </ng-container>
+
+            <!-- NOMBRE Column -->
+            <ng-container matColumnDef="nombre">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+            </ng-container>
+
+            <!-- DESCRIPCION Column -->
+            <ng-container matColumnDef="descripcion">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+                <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+            </ng-container>
+
+            <!-- IMAGEN Column -->
+            <ng-container matColumnDef="imagen">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
+                <td mat-cell *matCellDef="let element"> <img style="height: 45px; width: auto;" class="img" src="{{element.imagen}}"> </td>
+            </ng-container>
+
+            <!-- EDITAR Column -->
+            <ng-container matColumnDef="edit">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Editar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-mini-fab color="accent" data-toggle="modal" data-target="#modalCategoria" (click)="onPreUpdateCategoria(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- ELIMINAR Column -->
+            <ng-container matColumnDef="delete">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Borrar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-mini-fab color="warn" (click)="borrar(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <div style="padding-top: 3em;">
+
+        </div>
+
+    </div>
+</section>
+<app-modal-category-convenio></app-modal-category-convenio>

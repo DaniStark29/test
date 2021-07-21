@@ -1,0 +1,114 @@
+<section class="row mt-5">
+    <!-- <ngx-alerts></ngx-alerts> -->
+    <div class="container">
+        <h1><span style="font-size: 1em; color: #E36485;"><i class="fa fa-motorcycle"></i></span> Listado de repartidores</h1>
+        <div class="row">
+            <!-- <div class="col">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="&#xf002; Buscar nombre..." style="font-family:Arial, FontAwesome" name="filterPost" [(ngModel)]="filterPost">
+                </div>
+            </div> -->
+            <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalRepartidor"><i class="fa fa-plus"></i> Nuevo repartidor</button>
+        </div>
+    </div>
+    <div class="col">
+        <div class="csv table table-light ">
+            <p>Exportar CSV</p>
+            <a csvLink [data]="repartidores" class="eta btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+        </div>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort class="mat-elevation-z8">
+
+            <!-- NOMBRE Column -->
+            <ng-container matColumnDef="username">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.username}} {{element.lastname}} </td>
+            </ng-container>
+
+            <!-- TELEFONO Column -->
+            <ng-container matColumnDef="phone">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Teléfono </th>
+                <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+            </ng-container>
+
+            <!-- CORREO Column -->
+            <ng-container matColumnDef="email">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <!-- MARCA Column -->
+            <ng-container matColumnDef="marca">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Marca transporte </th>
+                <td mat-cell *matCellDef="let element"> {{element.marca}} </td>
+            </ng-container>
+
+            <!-- PLACA Column -->
+            <ng-container matColumnDef="placa">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
+                <td mat-cell *matCellDef="let element"> {{element.placa}} </td>
+            </ng-container>
+
+            <!-- ESTATUS Column -->
+            <ng-container matColumnDef="activo">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.activo == true">
+                        <mat-icon matBadge="+" matBadgeColor="accent">person_outline</mat-icon>
+                    </ng-container>
+                    <ng-container *ngIf="element.activo == false">
+                        <mat-icon matBadge="-" matBadgeColor="warn">person_outline</mat-icon>
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <!-- EDITAR Column -->
+            <ng-container matColumnDef="edit">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Editar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-mini-fab color="accent" routerLink="../../updateRepa/{{element.uid}}">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- ELIMINAR Column -->
+            <ng-container matColumnDef="delete">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Borrar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-mini-fab color="warn" (click)="onDeleteRepartidor(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- STATUS Column -->
+            <ng-container matColumnDef="status">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Estatus </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.activo == true">
+                        <button mat-mini-fab color="blue" (click)="onDesactivarRepartidor(element)">
+                            <mat-icon>toggle_off</mat-icon>
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="element.activo == false">
+                        <button mat-mini-fab color="primary" (click)="onActivarRepartidor(element)">                        
+                            <mat-icon>toggle_on</mat-icon>
+                        </button>
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <div style="padding-top: 3em;">
+
+        </div>
+    </div>
+</section>
+<app-modal-repartidor></app-modal-repartidor>

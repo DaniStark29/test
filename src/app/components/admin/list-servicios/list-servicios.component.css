@@ -1,0 +1,44 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+button {
+    border-radius: 25px;
+}
+
+.iconTi {
+    height: 35px;
+    width: 35px;
+}
+
+
+/* table {
+    margin-right: auto;
+    margin-left: auto;
+} */
+
+.bz {
+    border-radius: 25px;
+}
+
+input {
+    border-radius: 25px;
+}
+
+span {
+    font-size: 12px;
+}
+
+
+/* .noServ {
+    text-align: center;
+    font-size: 1rem;
+    color: #fff;
+    border-radius: 3rem;
+    background-color: #e84118;
+} */
