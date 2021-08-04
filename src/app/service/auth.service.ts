@@ -24,9 +24,9 @@ export class AuthService {
   newRegister(username: string, lastname: string, address: string, phone: string, marca: string, placa: string,
     email: string, pass: string, uidSucursal: string, img: string) {
     // Configuramos una nueva variable de conexión
-    const config = {apiKey: 'AIzaSyD8xxlECFplzdPspc4vcBlHH6LYIyGFMrk',
-    authDomain: 'bringme-a412b.firebaseapp.com',
-    databaseURL: 'https://bringme-a412b.firebaseio.com'};
+    const config = {apiKey: "AIzaSyCBWTmCjb-1_zDsl-yjBwl3EqCnVA_SEto",
+    authDomain: "toctoc-54179.firebaseapp.com",
+    databaseURL: "https://toctoc-54179.firebaseio.com",};
     const secondaryApp = firebase.initializeApp(config, 'Secondary');
     // Registramos al repartidor usando la nueva variable de conexión
     return new Promise((resolve, reject) => {

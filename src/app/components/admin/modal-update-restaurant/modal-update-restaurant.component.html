@@ -16,17 +16,26 @@
                     <label for="contacto"><b>Contacto: </b> </label>
                     <input type="text" name="contacto" class="form-control" placeholder="Maria Gonzalez" [(ngModel)]="restaurante.contacto">
                 </div>
-                <div class="form-group">
-                    <div class="form-group">
-                        <label><b>Ingrese dirección de entrega:</b> </label>
-                        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Buscar Dirección" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" required="true" #search>
+                <br>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                          </svg>
+                        </span>
                     </div>
-                    <agm-map [latitude]="restaurante.direccion.latitude" [longitude]="restaurante.direccion.longitude" [zoom]="zoom">
-                        <agm-marker [latitude]="restaurante.direccion.latitude" [longitude]="restaurante.direccion.longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
-                    </agm-map>
-                    <h5>Address: {{restaurante.address}}</h5>
-                    <div>Latitude: {{restaurante.direccion.latitude}}</div>
-                    <div>Longitude: {{restaurante.direccion.longitude}}</div>
+                    <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Buscar Dirección" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" required="true" #search>
+                </div>
+                <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                    <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                </agm-map>
+                <br>
+                <div class="form-group">
+                    <label for="telefono"><b>Dirección: </b></label>
+                    <input type="text" name="address" class="form-control" value="restaurante.address" [(ngModel)]="address">
+                    <input type="text" name="latitude" class="form-control" hidden value="restaurante.direccion.latitude" [(ngModel)]="latitude">
+                    <input type="text" name="longitude" class="form-control" hidden value="restaurante.direccion.longitude" [(ngModel)]="longitude">
                 </div>
                 <div class="form-group">
                     <label for="telefono"><b>Teléfono: </b></label>

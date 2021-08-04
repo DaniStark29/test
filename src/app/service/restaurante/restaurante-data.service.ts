@@ -134,8 +134,8 @@ export class RestauranteDataService {
     // Configuramos una nueva variable de conexión
     const config = {
       apiKey: "AIzaSyCBWTmCjb-1_zDsl-yjBwl3EqCnVA_SEto",
-      authDomain: "toctoc-54179.firebaseapp.com",
-      databaseURL: "https://toctoc-54179.firebaseio.com",
+    authDomain: "toctoc-54179.firebaseapp.com",
+    databaseURL: "https://toctoc-54179.firebaseio.com",
     };
     const secondaryApp = firebase.initializeApp(config, 'Secondary');
     // Registramos al repartidor usando la nueva variable de conexión

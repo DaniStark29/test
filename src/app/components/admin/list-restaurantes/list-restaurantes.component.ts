@@ -102,26 +102,30 @@ export class ListRestaurantesComponent implements OnInit, AfterViewInit {
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder();
-      const autocomplete = new google.maps.places.Autocomplete(
-        this.searchElementRef.nativeElement,
-        {
-          types: ['address']
-        }
-      );
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
+      setTimeout(() => {
+        const autocomplete = new google.maps.places.Autocomplete(
+          this.searchElementRef.nativeElement,
+          {
+            types: ['address'],
+            componentRestrictions: { country: "mx" },
           }
-          // set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.zoom = 12;
+        );
+        autocomplete.addListener('place_changed', () => {
+          this.ngZone.run(() => {
+            // get the place result
+            const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            // verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+            // set latitude, longitude and zoom
+            this.latitude = place.geometry.location.lat();
+            this.longitude = place.geometry.location.lng();
+            this.zoom = 20;
+            this.getAddress(this.latitude, this.longitude); 
+          });
         });
-      });
+      }, 1000);
     });
     // Sucursal
     console.log('user', this.user);
@@ -208,7 +212,7 @@ export class ListRestaurantesComponent implements OnInit, AfterViewInit {
       navigator.geolocation.getCurrentPosition(position => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
-        this.zoom = 8;
+        this.zoom = 20
         this.getAddress(this.latitude, this.longitude);
       });
     }
@@ -221,7 +225,7 @@ export class ListRestaurantesComponent implements OnInit, AfterViewInit {
         console.log(status);
         if (status === 'OK') {
           if (results[0]) {
-            this.zoom = 12;
+            this.zoom = 20;
             this.address = results[0].formatted_address;
           } else {
             window.alert('No results found');
@@ -289,7 +293,7 @@ export class ListRestaurantesComponent implements OnInit, AfterViewInit {
   }
   // imagen
   onUpload(e) {
-    console.log('subir', e.target.files[0]);
+    console.log('subir', e);
     const id = Math.random()
       .toString(36)
       .substring(2);

@@ -31,9 +31,9 @@ export class AdministradorDataService {
     email: string, pass: string, uidsucursal: string) {
     // Configuramos una nueva variable de conexión
     const config = {
-      apiKey: 'AIzaSyD8xxlECFplzdPspc4vcBlHH6LYIyGFMrk',
-      authDomain: 'bringme-a412b.firebaseapp.com',
-      databaseURL: 'https://bringme-a412b.firebaseio.com'
+      apiKey: "AIzaSyCBWTmCjb-1_zDsl-yjBwl3EqCnVA_SEto",
+    authDomain: "toctoc-54179.firebaseapp.com",
+    databaseURL: "https://toctoc-54179.firebaseio.com",
     };
     const secondaryApp = firebase.initializeApp(config, 'Secondary');
     // Registramos al ADMIN usando la nueva variable de conexión
